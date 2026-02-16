@@ -172,7 +172,6 @@ if [ ! -d "$COMFYUI_DIR" ] || [ ! -d "$VENV_DIR" ]; then
         "https://github.com/Fannovel16/comfyui_controlnet_aux"
         "https://github.com/ltdrdata/was-node-suite-comfyui"
         "https://github.com/yolain/ComfyUI-Easy-Use"
-        "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite"
         "https://github.com/kijai/ComfyUI-WanVideoWrapper"
         "https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch"
         "https://github.com/PozzettiAndrea/ComfyUI-SAM3"
@@ -239,13 +238,13 @@ if [ ! -d "$COMFYUI_DIR" ] || [ ! -d "$VENV_DIR" ]; then
     )
 
     # Download each model if it doesn't exist
-    for model in "${MODELS[@]}"; do
-        IFS='|' read -r filepath url <<< "$model"
-        if [ ! -f "$filepath" ]; then
-            echo "Downloading $(basename "$filepath")..."
-            wget -O "$filepath" "$url"
-        fi
-    done
+    # for model in "${MODELS[@]}"; do
+    #     IFS='|' read -r filepath url <<< "$model"
+    #     if [ ! -f "$filepath" ]; then
+    #         echo "Downloading $(basename "$filepath")..."
+    #         wget -O "$filepath" "$url"
+    #     fi
+    # done
 
     # Create and setup virtual environment if not present
     if [ ! -d "$VENV_DIR" ]; then

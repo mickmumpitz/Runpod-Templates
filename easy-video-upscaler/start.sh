@@ -209,40 +209,40 @@ if [ ! -d "$COMFYUI_DIR" ] || [ ! -d "$VENV_DIR" ]; then
     mkdir -p /workspace/runpod-slim/ComfyUI/models/loras/wan/Wan2.2-T2V-A14B-4steps-lora-rank64-Seko-V2.0/
     mkdir -p /workspace/runpod-slim/ComfyUI/models/upscale_models/
     
-    # Download diffusion model (only if it doesn't exist)
-    if [ ! -f "/workspace/runpod-slim/ComfyUI/models/diffusion_models/wan/wan2.2_t2v_low_noise_14B_fp8_scaled.safetensors" ]; then
-        echo "Downloading wan2.2_t2v_low_noise_14B_fp8_scaled.safetensors..."
-        wget -O /workspace/runpod-slim/ComfyUI/models/diffusion_models/wan/wan2.2_t2v_low_noise_14B_fp8_scaled.safetensors \
-            "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_t2v_low_noise_14B_fp8_scaled.safetensors"
-    fi
+    # # Download diffusion model (only if it doesn't exist)
+    # if [ ! -f "/workspace/runpod-slim/ComfyUI/models/diffusion_models/wan/wan2.2_t2v_low_noise_14B_fp8_scaled.safetensors" ]; then
+    #     echo "Downloading wan2.2_t2v_low_noise_14B_fp8_scaled.safetensors..."
+    #     wget -O /workspace/runpod-slim/ComfyUI/models/diffusion_models/wan/wan2.2_t2v_low_noise_14B_fp8_scaled.safetensors \
+    #         "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_t2v_low_noise_14B_fp8_scaled.safetensors"
+    # fi
     
-    # Download loras (only if it doesn't exist)
-    if [ ! -f "/workspace/runpod-slim/ComfyUI/models/loras/wan/Wan2.2-T2V-A14B-4steps-lora-rank64-Seko-V2.0/low_noise_model.safetensors" ]; then
-        echo "Downloading Wan2.2-T2V-A14B-4steps-lora-250928/low_noise_model.safetensors..."
-        wget -O /workspace/runpod-slim/ComfyUI/models/loras/wan/Wan2.2-T2V-A14B-4steps-lora-rank64-Seko-V2.0/low_noise_model.safetensors \
-            "https://huggingface.co/lightx2v/Wan2.2-Lightning/resolve/main/Wan2.2-T2V-A14B-4steps-lora-rank64-Seko-V2.0/low_noise_model.safetensors"
-    fi
+    # # Download loras (only if it doesn't exist)
+    # if [ ! -f "/workspace/runpod-slim/ComfyUI/models/loras/wan/Wan2.2-T2V-A14B-4steps-lora-rank64-Seko-V2.0/low_noise_model.safetensors" ]; then
+    #     echo "Downloading Wan2.2-T2V-A14B-4steps-lora-250928/low_noise_model.safetensors..."
+    #     wget -O /workspace/runpod-slim/ComfyUI/models/loras/wan/Wan2.2-T2V-A14B-4steps-lora-rank64-Seko-V2.0/low_noise_model.safetensors \
+    #         "https://huggingface.co/lightx2v/Wan2.2-Lightning/resolve/main/Wan2.2-T2V-A14B-4steps-lora-rank64-Seko-V2.0/low_noise_model.safetensors"
+    # fi
 
-    # Download text_encoders (only if it doesn't exist)
-    if [ ! -f "/workspace/runpod-slim/ComfyUI/models/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors" ]; then
-        echo "Downloading umt5_xxl_fp8_e4m3fn_scaled.safetensors..."
-        wget -O /workspace/runpod-slim/ComfyUI/models/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors \
-            "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors"
-    fi
+    # # Download text_encoders (only if it doesn't exist)
+    # if [ ! -f "/workspace/runpod-slim/ComfyUI/models/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors" ]; then
+    #     echo "Downloading umt5_xxl_fp8_e4m3fn_scaled.safetensors..."
+    #     wget -O /workspace/runpod-slim/ComfyUI/models/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors \
+    #         "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors"
+    # fi
 
-    # Download VAE (only if it doesn't exist)
-    if [ ! -f "/workspace/runpod-slim/ComfyUI/models/vae/wan_2.1_vae.safetensors" ]; then
-        echo "Downloading wan_2.1_vae.safetensors..."
-        wget -O /workspace/runpod-slim/ComfyUI/models/vae/wan_2.1_vae.safetensors \
-            "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors"
-    fi
+    # # Download VAE (only if it doesn't exist)
+    # if [ ! -f "/workspace/runpod-slim/ComfyUI/models/vae/wan_2.1_vae.safetensors" ]; then
+    #     echo "Downloading wan_2.1_vae.safetensors..."
+    #     wget -O /workspace/runpod-slim/ComfyUI/models/vae/wan_2.1_vae.safetensors \
+    #         "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors"
+    # fi
 
-    # Download VAE (only if it doesn't exist)
-    if [ ! -f "/workspace/runpod-slim/ComfyUI/models/upscale_models/RealESRGAN_x2.pth" ]; then
-        echo "Downloading wan_2.1_vae.safetensors..."
-        wget -O /workspace/runpod-slim/ComfyUI/models/upscale_models/RealESRGAN_x2.pth \
-            "https://huggingface.co/ai-forever/Real-ESRGAN/resolve/main/RealESRGAN_x2.pth"
-    fi
+    # # Download VAE (only if it doesn't exist)
+    # if [ ! -f "/workspace/runpod-slim/ComfyUI/models/upscale_models/RealESRGAN_x2.pth" ]; then
+    #     echo "Downloading wan_2.1_vae.safetensors..."
+    #     wget -O /workspace/runpod-slim/ComfyUI/models/upscale_models/RealESRGAN_x2.pth \
+    #         "https://huggingface.co/ai-forever/Real-ESRGAN/resolve/main/RealESRGAN_x2.pth"
+    # fi
 
     # Create and setup virtual environment if not present
     if [ ! -d "$VENV_DIR" ]; then
