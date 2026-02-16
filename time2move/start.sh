@@ -237,14 +237,28 @@ if [ ! -d "$COMFYUI_DIR" ] || [ ! -d "$VENV_DIR" ]; then
         "$MODELS_BASE/vae/Wan2_1_VAE_bf16.safetensors|https://huggingface.co/Kijai/WanVideo_comfy/resolve/346ea0b6848edd2aa7e34d0444b2b05ebc7bd97a/Wan2_1_VAE_bf16.safetensors"
     )
 
-    # Download each model if it doesn't exist
+    # Download all models in parallel
+    DL_PIDS=()
     for model in "${MODELS[@]}"; do
         IFS='|' read -r filepath url <<< "$model"
         if [ ! -f "$filepath" ]; then
             echo "Downloading $(basename "$filepath")..."
-            wget -O "$filepath" "$url"
+            wget -q -O "$filepath" "$url" &
+            DL_PIDS+=($!)
         fi
     done
+    # Wait for all downloads to finish
+    DL_FAILED=0
+    for pid in "${DL_PIDS[@]}"; do
+        if ! wait "$pid"; then
+            DL_FAILED=1
+        fi
+    done
+    if [ "$DL_FAILED" -ne 0 ]; then
+        echo "WARNING: Some model downloads failed. Check logs above."
+    else
+        echo "All model downloads completed."
+    fi
 
     # Create and setup virtual environment if not present
     if [ ! -d "$VENV_DIR" ]; then
