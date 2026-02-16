@@ -6,7 +6,6 @@ VENV_DIR="$COMFYUI_DIR/.venv"
 # export VENV_DIR
 FILEBROWSER_CONFIG="/root/.config/filebrowser/config.json"
 DB_FILE="/workspace/runpod-slim/filebrowser.db"
-CUSTOM_REQS_INSTALLED="$COMFYUI_DIR/.custom_reqs_installed"
 
 # ---------------------------------------------------------------------------- #
 #                          Function Definitions                                  #
@@ -260,36 +259,36 @@ if [ ! -d "$COMFYUI_DIR" ] || [ ! -d "$VENV_DIR" ]; then
         export UV_LINK_MODE=copy
         
         # Install the requirements and PyTorch
-        uv pip install --no-cache torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
+        uv pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu130
         uv pip install --no-cache -r requirements.txt
         
         # Install dependencies for custom nodes
         echo "Installing/updating dependencies for custom nodes..."
-        uv pip install --no-cache GitPython numpy pillow opencv-python  # Common dependencies
-        
+        pip install GitPython numpy pillow opencv-python  # Common dependencies
+
         # Install dependencies for all custom nodes
         cd "$COMFYUI_DIR/custom_nodes"
         for node_dir in */; do
             if [ -d "$node_dir" ]; then
                 echo "Checking dependencies for $node_dir..."
                 cd "$COMFYUI_DIR/custom_nodes/$node_dir"
-                
+
                 # Check for requirements.txt
                 if [ -f "requirements.txt" ]; then
                     echo "Installing requirements.txt for $node_dir"
-                    uv pip install --no-cache -r requirements.txt
+                    pip install -r requirements.txt
                 fi
-                
+
                 # Check for install.py
                 if [ -f "install.py" ]; then
                     echo "Running install.py for $node_dir"
                     python install.py
                 fi
-                
+
                 # Check for setup.py
                 if [ -f "setup.py" ]; then
                     echo "Running setup.py for $node_dir"
-                    uv pip install --no-cache -e .
+                    pip install -e .
                 fi
             fi
         done
@@ -300,51 +299,38 @@ else
     
     # Always install/update dependencies for custom nodes
     echo "Installing/updating dependencies for custom nodes..."
-    uv pip install --no-cache GitPython numpy pillow  # Common dependencies
-    
+    pip install GitPython numpy pillow  # Common dependencies
+
     # Install dependencies for all custom nodes
     cd "$COMFYUI_DIR/custom_nodes"
     for node_dir in */; do
         if [ -d "$node_dir" ]; then
             echo "Checking dependencies for $node_dir..."
             cd "$COMFYUI_DIR/custom_nodes/$node_dir"
-            
+
             # Check for requirements.txt
             if [ -f "requirements.txt" ]; then
                 echo "Installing requirements.txt for $node_dir"
-                uv pip install --no-cache -r requirements.txt
+                pip install -r requirements.txt
             fi
-            
+
             # Check for install.py
             if [ -f "install.py" ]; then
                 echo "Running install.py for $node_dir"
                 python install.py
             fi
-            
+
             # Check for setup.py
             if [ -f "setup.py" ]; then
                 echo "Running setup.py for $node_dir"
-                uv pip install --no-cache -e .
+                pip install -e .
             fi
         fi
     done
 fi
 
-# Installing custom requirements (one-time installation)
-if [ ! -f "$CUSTOM_REQS_INSTALLED" ]; then
-    echo "Installing custom node requirements..."
-    source $VENV_DIR/bin/activate
-    pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-Florence2/requirements.txt
-    pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-Impact-Pack/requirements.txt
-    pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/was-node-suite-comfyui/requirements.txt
-    pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/comfyui_controlnet_aux/requirements.txt
-    pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-WanVideoWrapper/requirements.txt
-    pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-SAM3/requirements.txt
-    touch "$CUSTOM_REQS_INSTALLED"
-    echo "Custom node requirements installed successfully"
-else
-    echo "Custom node requirements already installed, skipping..."
-fi
+# Second pip install pass removed - custom node requirements are now installed
+# in the main loop above using pip instead of uv for better compatibility
 
 # Start ComfyUI with custom arguments if provided
 cd $COMFYUI_DIR
