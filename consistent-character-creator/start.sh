@@ -5,6 +5,7 @@ COMFYUI_DIR="/workspace/runpod-slim/ComfyUI"
 VENV_DIR="$COMFYUI_DIR/.venv"
 FILEBROWSER_CONFIG="/root/.config/filebrowser/config.json"
 DB_FILE="/workspace/runpod-slim/filebrowser.db"
+CUSTOM_REQS_INSTALLED="$COMFYUI_DIR/.custom_reqs_installed"
 
 # ---------------------------------------------------------------------------- #
 #                          Function Definitions                                  #
@@ -229,14 +230,28 @@ if [ ! -d "$COMFYUI_DIR" ] || [ ! -d "$VENV_DIR" ]; then
         "$MODELS_BASE/upscale_models/4x-UltraSharp.pth|https://huggingface.co/Kim2091/UltraSharp/resolve/main/4x-UltraSharp.pth"
     )
 
-    # Download each model if it doesn't exist
+    # Download all models in parallel
+    DL_PIDS=()
     for model in "${MODELS[@]}"; do
         IFS='|' read -r filepath url <<< "$model"
         if [ ! -f "$filepath" ]; then
             echo "Downloading $(basename "$filepath")..."
-            wget -O "$filepath" "$url"
+            wget -q -O "$filepath" "$url" &
+            DL_PIDS+=($!)
         fi
     done
+    # Wait for all downloads to finish
+    DL_FAILED=0
+    for pid in "${DL_PIDS[@]}"; do
+        if ! wait "$pid"; then
+            DL_FAILED=1
+        fi
+    done
+    if [ "$DL_FAILED" -ne 0 ]; then
+        echo "WARNING: Some model downloads failed. Check logs above."
+    else
+        echo "All model downloads completed."
+    fi
 
     # Create and setup virtual environment if not present
     if [ ! -d "$VENV_DIR" ]; then
@@ -251,8 +266,26 @@ if [ ! -d "$COMFYUI_DIR" ] || [ ! -d "$VENV_DIR" ]; then
         # Configure uv to use copy instead of hardlinks
         export UV_LINK_MODE=copy
         
-        # Install the requirements and PyTorch
-        uv pip install --no-cache torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
+        # Detect CUDA version and install matching PyTorch
+        if command -v nvidia-smi &> /dev/null; then
+            CUDA_VERSION=$(nvidia-smi | grep -oP 'CUDA Version: \K[0-9]+\.[0-9]+')
+            CUDA_MAJOR=$(echo "$CUDA_VERSION" | cut -d. -f1)
+            CUDA_MINOR=$(echo "$CUDA_VERSION" | cut -d. -f2)
+            echo "Detected CUDA version: $CUDA_VERSION"
+        else
+            echo "nvidia-smi not found, defaulting to CUDA 12.8"
+            CUDA_MAJOR=12
+            CUDA_MINOR=8
+        fi
+
+        if [ "$CUDA_MAJOR" -ge 13 ]; then
+            echo "Installing PyTorch for CUDA 13.0..."
+            TORCH_INDEX="https://download.pytorch.org/whl/cu130"
+        else
+            echo "Installing PyTorch for CUDA 12.8..."
+            TORCH_INDEX="https://download.pytorch.org/whl/cu128"
+        fi
+        uv pip install torch torchvision torchaudio --index-url "$TORCH_INDEX"
         uv pip install --no-cache -r requirements.txt
         
         # Install dependencies for custom nodes
@@ -322,12 +355,19 @@ else
     done
 fi
 
-# Installing custom requirements
-source $VENV_DIR/bin/activate
-pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-Florence2/requirements.txt
-pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-Impact-Pack/requirements.txt
-pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/was-node-suite-comfyui/requirements.txt
-pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/comfyui_controlnet_aux/requirements.txt
+# Installing custom requirements (one-time installation)
+if [ ! -f "$CUSTOM_REQS_INSTALLED" ]; then
+    echo "Installing custom node requirements..."
+    source $VENV_DIR/bin/activate
+    pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-Florence2/requirements.txt
+    pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-Impact-Pack/requirements.txt
+    pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/was-node-suite-comfyui/requirements.txt
+    pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/comfyui_controlnet_aux/requirements.txt
+    touch "$CUSTOM_REQS_INSTALLED"
+    echo "Custom node requirements installed successfully"
+else
+    echo "Custom node requirements already installed, skipping..."
+fi
 
 
 # Start ComfyUI with custom arguments if provided
