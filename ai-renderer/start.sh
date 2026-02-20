@@ -168,6 +168,12 @@ if [ ! -d "$COMFYUI_DIR" ] || [ ! -d "$VENV_DIR" ]; then
         "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite"
         "https://github.com/cubiq/ComfyUI_essentials"
         "https://github.com/kijai/ComfyUI-WanVideoWrapper"
+        "https://github.com/Fannovel16/comfyui_controlnet_aux"
+        "https://github.com/ltdrdata/ComfyUI-Impact-Pack"
+        "https://github.com/yolain/ComfyUI-Easy-Use"
+        "https://github.com/PozzettiAndrea/ComfyUI-DepthAnythingV3"
+        "https://github.com/drozbay/ComfyUI-WanVaceAdvanced"
+        "https://github.com/mickmumpitz/ComfyUI-Mickmumpitz-Nodes"
     )
 
     for repo in "${CUSTOM_NODES[@]}"; do
@@ -337,6 +343,7 @@ if [ ! -f "$CUSTOM_REQS_INSTALLED" ]; then
     echo "Installing custom node requirements..."
     source $VENV_DIR/bin/activate
     pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-WanVideoWrapper/requirements.txt
+    pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-Impact-Pack/requirements.txt
     touch "$CUSTOM_REQS_INSTALLED"
     echo "Custom node requirements installed successfully"
 else
