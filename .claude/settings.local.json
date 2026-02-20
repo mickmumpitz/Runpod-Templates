@@ -4,7 +4,9 @@
       "Bash(wc:*)",
       "Bash(python3:*)",
       "Bash(python:*)",
-      "WebSearch"
+      "WebSearch",
+      "Bash(docker history:*)",
+      "Bash(echo:*)"
     ]
   }
 }

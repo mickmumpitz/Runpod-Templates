@@ -208,9 +208,9 @@ if [ ! -d "$COMFYUI_DIR" ] || [ ! -d "$VENV_DIR" ]; then
     # Define models to download: "local_path|url"
     MODELS=(
         "$MODELS_BASE/vae/wan_2.1_vae.safetensors|https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors"
-        # "$MODELS_BASE/clip/umt5_xxl_fp8_e4m3fn_scaled.safetensors|https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors"
+        "$MODELS_BASE/clip/umt5_xxl_fp8_e4m3fn_scaled.safetensors|https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors"
         "$MODELS_BASE/loras/Wan2.1_T2V_14B_FusionX_LoRA.safetensors|https://huggingface.co/vrgamedevgirl84/Wan14BT2VFusioniX/resolve/main/FusionX_LoRa/Wan2.1_T2V_14B_FusionX_LoRA.safetensors"
-        # "$MODELS_BASE/diffusion_models/wan/wan-14B_vace_skyreels_v3_R2V_e4m3fn_v1.safetensors|https://huggingface.co/Inner-Reflections/VACE_Skyreels_V3_R2V_Merge/resolve/main/wan-14B_vace_skyreels_v3_R2V_e4m3fn_v1.safetensors"
+        "$MODELS_BASE/diffusion_models/wan/wan-14B_vace_skyreels_v3_R2V_e4m3fn_v1.safetensors|https://huggingface.co/Inner-Reflections/VACE_Skyreels_V3_R2V_Merge/resolve/main/wan-14B_vace_skyreels_v3_R2V_e4m3fn_v1.safetensors"
     )
 
     # Download all models in parallel
@@ -344,6 +344,8 @@ if [ ! -f "$CUSTOM_REQS_INSTALLED" ]; then
     source $VENV_DIR/bin/activate
     pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-WanVideoWrapper/requirements.txt
     pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-Impact-Pack/requirements.txt
+    pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-Easy-Use/requirements.txt
+    pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-DepthAnythingV3/requirements.txt
     touch "$CUSTOM_REQS_INSTALLED"
     echo "Custom node requirements installed successfully"
 else
@@ -369,5 +371,5 @@ else
     nohup python main.py $FIXED_ARGS &> /workspace/runpod-slim/comfyui.log &
 fi
 
-# Tail the log file
+# Tail the log file 
 tail -f /workspace/runpod-slim/comfyui.log
