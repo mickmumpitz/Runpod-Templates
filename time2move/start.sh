@@ -273,26 +273,9 @@ if [ ! -d "$COMFYUI_DIR" ] || [ ! -d "$VENV_DIR" ]; then
         # Configure uv to use copy instead of hardlinks
         export UV_LINK_MODE=copy
         
-        # Detect CUDA version and install matching PyTorch
-        if command -v nvidia-smi &> /dev/null; then
-            CUDA_VERSION=$(nvidia-smi | grep -oP 'CUDA Version: \K[0-9]+\.[0-9]+')
-            CUDA_MAJOR=$(echo "$CUDA_VERSION" | cut -d. -f1)
-            CUDA_MINOR=$(echo "$CUDA_VERSION" | cut -d. -f2)
-            echo "Detected CUDA version: $CUDA_VERSION"
-        else
-            echo "nvidia-smi not found, defaulting to CUDA 12.8"
-            CUDA_MAJOR=12
-            CUDA_MINOR=8
-        fi
-
-        if [ "$CUDA_MAJOR" -ge 13 ]; then
-            echo "Installing PyTorch for CUDA 13.0..."
-            TORCH_INDEX="https://download.pytorch.org/whl/cu130"
-        else
-            echo "Installing PyTorch for CUDA 12.8..."
-            TORCH_INDEX="https://download.pytorch.org/whl/cu128"
-        fi
-        uv pip install torch torchvision torchaudio --index-url "$TORCH_INDEX"
+        # Install PyTorch for CUDA 12.8
+        echo "Installing PyTorch for CUDA 12.8..."
+        uv pip install torch torchvision torchaudio --index-url "https://download.pytorch.org/whl/cu128"
         uv pip install --no-cache -r requirements.txt
         
         # Install dependencies for custom nodes
