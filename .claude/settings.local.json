@@ -6,7 +6,8 @@
       "Bash(python:*)",
       "WebSearch",
       "Bash(docker history:*)",
-      "Bash(echo:*)"
+      "Bash(echo:*)",
+      "Bash(cd:*)"
     ]
   }
 }

@@ -175,6 +175,7 @@ if [ ! -d "$COMFYUI_DIR" ] || [ ! -d "$VENV_DIR" ]; then
         "https://github.com/drozbay/ComfyUI-WanVaceAdvanced"
         "https://github.com/mickmumpitz/ComfyUI-Mickmumpitz-Nodes"
         "https://github.com/ClownsharkBatwing/RES4LYF"
+        "https://github.com/kijai/ComfyUI-GIMM-VFI"
     )
 
     for repo in "${CUSTOM_NODES[@]}"; do
@@ -331,6 +332,8 @@ if [ ! -f "$CUSTOM_REQS_INSTALLED" ]; then
     pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-Easy-Use/requirements.txt
     pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-DepthAnythingV3/requirements.txt
     pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/RES4LYF/requirements.txt
+    pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-GIMM-VFI/requirements.txt
+    pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/comfyui-kjnodes/requirements.txt
     touch "$CUSTOM_REQS_INSTALLED"
     echo "Custom node requirements installed successfully"
 else
