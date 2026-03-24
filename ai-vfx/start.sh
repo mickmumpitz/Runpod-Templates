@@ -138,8 +138,13 @@ start_jupyter
 # Create default comfyui_args.txt if it doesn't exist
 ARGS_FILE="/workspace/runpod-slim/comfyui_args.txt"
 if [ ! -f "$ARGS_FILE" ]; then
-    echo "# Add your custom ComfyUI arguments here (one per line)" > "$ARGS_FILE"
-    echo "Created empty ComfyUI arguments file at $ARGS_FILE"
+    if [ -f "/opt/import/comfyui_args.txt" ]; then
+        cp /opt/import/comfyui_args.txt "$ARGS_FILE"
+        echo "Copied default ComfyUI arguments file"
+    else
+        echo "# Add your custom ComfyUI arguments here (one per line)" > "$ARGS_FILE"
+        echo "Created empty ComfyUI arguments file at $ARGS_FILE"
+    fi
 fi
 
 # Setup ComfyUI if needed
@@ -353,19 +358,17 @@ if ! python -c "import sageattention" 2>/dev/null && [ ! -f "$SAGE_FAILED_MARKER
     if (
         export TORCH_CUDA_ARCH_LIST="$GPU_COMPUTE_CAP"
 
-        # Blackwell GPUs (12.0+) require CUDA 12.8 toolkit for nvcc compilation
-        MAJOR=$(echo "$GPU_COMPUTE_CAP" | cut -d. -f1)
-        if [ "$MAJOR" -ge 12 ]; then
-            if [ ! -d "/usr/local/cuda-12.8" ]; then
-                echo "Installing CUDA 12.8 toolkit for Blackwell GPU..."
-                cd /workspace
-                wget -q https://developer.download.nvidia.com/compute/cuda/12.8.0/local_installers/cuda_12.8.0_570.86.10_linux.run
-                sh cuda_12.8.0_570.86.10_linux.run --toolkit --silent --override --no-man-page
-                rm -f cuda_12.8.0_570.86.10_linux.run
-            fi
-            export CUDA_HOME=/usr/local/cuda-12.8
-            export PATH=$CUDA_HOME/bin:$PATH
+        # Install CUDA 12.8 toolkit if not present (provides dev headers like cusparse.h
+        # that RunPod base images may lack, and matches PyTorch cu128)
+        if [ ! -d "/usr/local/cuda-12.8" ]; then
+            echo "Installing CUDA 12.8 toolkit..."
+            cd /workspace
+            wget -q https://developer.download.nvidia.com/compute/cuda/12.8.0/local_installers/cuda_12.8.0_570.86.10_linux.run
+            sh cuda_12.8.0_570.86.10_linux.run --toolkit --silent --override --no-man-page
+            rm -f cuda_12.8.0_570.86.10_linux.run
         fi
+        export CUDA_HOME=/usr/local/cuda-12.8
+        export PATH=$CUDA_HOME/bin:$PATH
 
         # ninja is required so PyTorch's cpp_extension properly separates host/device compiler flags
         pip install ninja
