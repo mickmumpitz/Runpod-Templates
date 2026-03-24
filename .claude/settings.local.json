@@ -11,7 +11,13 @@
       "Bash(gh api:*)",
       "WebFetch(domain:github.com)",
       "WebFetch(domain:raw.githubusercontent.com)",
-      "WebFetch(domain:pypi.org)"
+      "WebFetch(domain:pypi.org)",
+      "Bash(for dir:*)",
+      "Bash(do echo:*)",
+      "Read(//c/Users/cemka/Documents/GitHub/Runpod-Templates/**)",
+      "Bash(done)",
+      "Bash(find /c/Users/cemka/Documents/GitHub/Runpod-Templates -type f \\\\\\(-name requirements*.txt -o -name *.md -o -name *.json -path */workflows/* \\\\\\))",
+      "Bash(cp:*)"
     ]
   }
 }

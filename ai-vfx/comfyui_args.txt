@@ -1,1 +1,2 @@
 # Add your custom ComfyUI arguments here (one per line)
+--use-sage-attention

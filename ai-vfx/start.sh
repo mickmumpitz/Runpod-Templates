@@ -176,7 +176,6 @@ if [ ! -d "$COMFYUI_DIR" ] || [ ! -d "$VENV_DIR" ]; then
         "https://github.com/mickmumpitz/ComfyUI-Mickmumpitz-Nodes"
         "https://github.com/ClownsharkBatwing/RES4LYF"
         "https://github.com/kijai/ComfyUI-GIMM-VFI"
-        "https://github.com/city96/ComfyUI-GGUF"
     )
 
     for repo in "${CUSTOM_NODES[@]}"; do
@@ -335,11 +334,57 @@ if [ ! -f "$CUSTOM_REQS_INSTALLED" ]; then
     pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/RES4LYF/requirements.txt
     pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-GIMM-VFI/requirements.txt
     pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-KJNodes/requirements.txt
-    pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-GGUF/requirements.txt
     touch "$CUSTOM_REQS_INSTALLED"
     echo "Custom node requirements installed successfully"
 else
     echo "Custom node requirements already installed, skipping..."
+fi
+
+# Install SageAttention 2.2.0 from source
+SAGE_FAILED_MARKER="/workspace/.sage_build_failed"
+if ! python -c "import sageattention" 2>/dev/null && [ ! -f "$SAGE_FAILED_MARKER" ]; then
+    echo "Building SageAttention 2.2.0 from source..."
+
+    # Detect GPU compute capability via nvidia-smi (doesn't require CUDA init)
+    GPU_COMPUTE_CAP=$(nvidia-smi --query-gpu=compute_cap --format=csv,noheader | head -1)
+    echo "Detected GPU compute capability: $GPU_COMPUTE_CAP"
+
+    # Run build in a subshell so CUDA_HOME/PATH changes don't leak into ComfyUI
+    if (
+        export TORCH_CUDA_ARCH_LIST="$GPU_COMPUTE_CAP"
+
+        # Blackwell GPUs (12.0+) require CUDA 12.8 toolkit for nvcc compilation
+        MAJOR=$(echo "$GPU_COMPUTE_CAP" | cut -d. -f1)
+        if [ "$MAJOR" -ge 12 ]; then
+            if [ ! -d "/usr/local/cuda-12.8" ]; then
+                echo "Installing CUDA 12.8 toolkit for Blackwell GPU..."
+                cd /workspace
+                wget -q https://developer.download.nvidia.com/compute/cuda/12.8.0/local_installers/cuda_12.8.0_570.86.10_linux.run
+                sh cuda_12.8.0_570.86.10_linux.run --toolkit --silent --override --no-man-page
+                rm -f cuda_12.8.0_570.86.10_linux.run
+            fi
+            export CUDA_HOME=/usr/local/cuda-12.8
+            export PATH=$CUDA_HOME/bin:$PATH
+        fi
+
+        # ninja is required so PyTorch's cpp_extension properly separates host/device compiler flags
+        pip install ninja
+
+        cd /workspace
+        rm -rf SageAttention
+        git clone https://github.com/thu-ml/SageAttention.git
+        cd SageAttention
+        EXT_PARALLEL=4 NVCC_APPEND_FLAGS="--threads 8" MAX_JOBS=32 python setup.py install
+        cd /workspace
+        rm -rf SageAttention
+    ); then
+        echo "SageAttention 2.2.0 installed successfully"
+    else
+        echo "WARNING: SageAttention build failed. Continuing without it."
+        touch "$SAGE_FAILED_MARKER"
+    fi
+else
+    echo "SageAttention already installed (or build previously failed), skipping..."
 fi
 
 # Start ComfyUI with custom arguments if provided
