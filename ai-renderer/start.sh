@@ -254,11 +254,11 @@ if [ ! -d "$COMFYUI_DIR" ] || [ ! -d "$VENV_DIR" ]; then
         # Install PyTorch for CUDA 12.8
         echo "Installing PyTorch for CUDA 12.8..."
         uv pip install torch torchvision torchaudio --index-url "https://download.pytorch.org/whl/cu128"
-        uv pip install --no-cache -r requirements.txt
+        uv pip install -r requirements.txt
 
         # Install dependencies for custom nodes
         echo "Installing/updating dependencies for custom nodes..."
-        uv pip install --no-cache GitPython numpy pillow opencv-python  # Common dependencies
+        uv pip install GitPython numpy pillow opencv-python  # Common dependencies
 
         # Install dependencies for all custom nodes
         cd "$COMFYUI_DIR/custom_nodes"
@@ -270,7 +270,7 @@ if [ ! -d "$COMFYUI_DIR" ] || [ ! -d "$VENV_DIR" ]; then
                 # Check for requirements.txt
                 if [ -f "requirements.txt" ]; then
                     echo "Installing requirements.txt for $node_dir"
-                    uv pip install --no-cache -r requirements.txt
+                    uv pip install -r requirements.txt
                 fi
 
                 # Check for install.py
@@ -282,7 +282,7 @@ if [ ! -d "$COMFYUI_DIR" ] || [ ! -d "$VENV_DIR" ]; then
                 # Check for setup.py
                 if [ -f "setup.py" ]; then
                     echo "Running setup.py for $node_dir"
-                    uv pip install --no-cache -e .
+                    uv pip install -e .
                 fi
             fi
         done
@@ -293,7 +293,7 @@ else
 
     # Always install/update dependencies for custom nodes
     echo "Installing/updating dependencies for custom nodes..."
-    uv pip install --no-cache GitPython numpy pillow  # Common dependencies
+    uv pip install GitPython numpy pillow  # Common dependencies
 
     # Install dependencies for all custom nodes
     cd "$COMFYUI_DIR/custom_nodes"
@@ -305,7 +305,7 @@ else
             # Check for requirements.txt
             if [ -f "requirements.txt" ]; then
                 echo "Installing requirements.txt for $node_dir"
-                uv pip install --no-cache -r requirements.txt
+                uv pip install -r requirements.txt
             fi
 
             # Check for install.py
@@ -317,7 +317,7 @@ else
             # Check for setup.py
             if [ -f "setup.py" ]; then
                 echo "Running setup.py for $node_dir"
-                uv pip install --no-cache -e .
+                uv pip install -e .
             fi
         fi
     done
@@ -333,7 +333,7 @@ if [ ! -f "$CUSTOM_REQS_INSTALLED" ]; then
     pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-DepthAnythingV3/requirements.txt
     pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/RES4LYF/requirements.txt
     pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-GIMM-VFI/requirements.txt
-    pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/comfyui-kjnodes/requirements.txt
+    pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-KJNodes/requirements.txt
     touch "$CUSTOM_REQS_INSTALLED"
     echo "Custom node requirements installed successfully"
 else
