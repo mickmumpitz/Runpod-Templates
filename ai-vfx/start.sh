@@ -196,6 +196,14 @@ if [ ! -d "$COMFYUI_DIR" ] || [ ! -d "$VENV_DIR" ]; then
         echo "Copying workflows..."
         mkdir -p /workspace/runpod-slim/ComfyUI/user/default/workflows
         cp -r /opt/import/workflows/* /workspace/runpod-slim/ComfyUI/user/default/workflows/
+
+        # Set default workflow (auto-loads on first ComfyUI visit)
+        DEFAULT_WF=$(ls /opt/import/workflows/*.json 2>/dev/null | head -1)
+        if [ -n "$DEFAULT_WF" ]; then
+            mkdir -p "$COMFYUI_DIR/web/templates"
+            cp "$DEFAULT_WF" "$COMFYUI_DIR/web/templates/default.json"
+            echo "Default workflow set to: $(basename "$DEFAULT_WF")"
+        fi
     fi
 
     # Download models from Hugging Face
