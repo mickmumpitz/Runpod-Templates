@@ -167,20 +167,19 @@ if [ ! -d "$COMFYUI_DIR" ] || [ ! -d "$VENV_DIR" ]; then
 
     # Install additional custom nodes
     CUSTOM_NODES=(
-        "https://github.com/pythongosssss/ComfyUI-Custom-Scripts"
         "https://github.com/rgthree/rgthree-comfy"
         "https://github.com/kijai/ComfyUI-KJNodes"
         "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite"
-        "https://github.com/cubiq/ComfyUI_essentials"
         "https://github.com/kijai/ComfyUI-WanVideoWrapper"
         "https://github.com/Fannovel16/comfyui_controlnet_aux"
-        "https://github.com/ltdrdata/ComfyUI-Impact-Pack"
+#        "https://github.com/ltdrdata/ComfyUI-Impact-Pack"
         "https://github.com/yolain/ComfyUI-Easy-Use"
-        "https://github.com/PozzettiAndrea/ComfyUI-DepthAnythingV3"
+        "https://github.com/akatz-ai/ComfyUI-DepthCrafter-Nodes"
         "https://github.com/drozbay/ComfyUI-WanVaceAdvanced"
         "https://github.com/mickmumpitz/ComfyUI-Mickmumpitz-Nodes"
         "https://github.com/ClownsharkBatwing/RES4LYF"
-        "https://github.com/kijai/ComfyUI-GIMM-VFI"
+#        "https://github.com/1038lab/ComfyUI-RMBG"
+        "https://github.com/s9roll7/comfyui_cotracker_node"
     )
 
     for repo in "${CUSTOM_NODES[@]}"; do
@@ -333,12 +332,12 @@ if [ ! -f "$CUSTOM_REQS_INSTALLED" ]; then
     echo "Installing custom node requirements..."
     source $VENV_DIR/bin/activate
     pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-WanVideoWrapper/requirements.txt
-    pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-Impact-Pack/requirements.txt
+#    pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-Impact-Pack/requirements.txt
     pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-Easy-Use/requirements.txt
-    pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-DepthAnythingV3/requirements.txt
     pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/RES4LYF/requirements.txt
-    pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-GIMM-VFI/requirements.txt
     pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/ComfyUI-KJNodes/requirements.txt
+#    pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/comfyui-depthcrafter-nodes/requirements.txt
+#    pip install -r /workspace/runpod-slim/ComfyUI/custom_nodes/comfyui-rmbg/requirements.txt
     touch "$CUSTOM_REQS_INSTALLED"
     echo "Custom node requirements installed successfully"
 else
