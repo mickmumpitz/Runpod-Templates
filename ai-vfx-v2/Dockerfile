@@ -33,9 +33,12 @@ RUN pip install --no-cache-dir \
     done
 
 # ── Pre-install ninja + CUDA dev headers (needed for SageAttention build) ────
-# The base image has nvcc but not all CUDA headers (cusparse.h etc.)
+# The base image has nvcc but not all CUDA dev headers (cusparse.h, cusolverDn.h, etc.)
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends libcusparse-dev-12-8 libcublas-dev-12-8 && \
+    apt-get install -y --no-install-recommends \
+        libcusparse-dev-12-8 \
+        libcublas-dev-12-8 \
+        libcusolver-dev-12-8 && \
     rm -rf /var/lib/apt/lists/* && \
     pip install --no-cache-dir ninja
 
