@@ -21,7 +21,8 @@
       "Bash(docker exec:*)",
       "Bash(gh issue:*)",
       "Bash(where gh:*)",
-      "WebFetch(domain:api.github.com)"
+      "WebFetch(domain:api.github.com)",
+      "Bash(docker images:*)"
     ]
   }
 }
