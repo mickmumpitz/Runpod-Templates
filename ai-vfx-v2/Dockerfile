@@ -20,7 +20,9 @@ RUN git clone https://github.com/rgthree/rgthree-comfy && \
     git clone https://github.com/drozbay/ComfyUI-WanVaceAdvanced && \
     git clone https://github.com/mickmumpitz/ComfyUI-Mickmumpitz-Nodes && \
     git clone https://github.com/ClownsharkBatwing/RES4LYF && \
-    git clone https://github.com/s9roll7/comfyui_cotracker_node
+    git clone https://github.com/s9roll7/comfyui_cotracker_node && \
+    git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack && \
+    git clone https://github.com/1038lab/ComfyUI-RMBG
 
 # ── Install all custom-node deps into system site-packages ────────────────────
 RUN pip install --no-cache-dir \

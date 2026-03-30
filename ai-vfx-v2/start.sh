@@ -136,7 +136,7 @@ if [ -d "$OLD_VENV_DIR" ] && [ ! -d "$VENV_DIR" ]; then
     source "$VENV_DIR/bin/activate"
     python -m ensurepip
     # Skip nodes baked into the image — their deps are in system site-packages
-    BAKED_NODES="ComfyUI-Manager ComfyUI-KJNodes Civicomfy ComfyUI-RunpodDirect rgthree-comfy ComfyUI-VideoHelperSuite ComfyUI-WanVideoWrapper comfyui_controlnet_aux ComfyUI-Easy-Use ComfyUI-DepthCrafter-Nodes ComfyUI-WanVaceAdvanced ComfyUI-Mickmumpitz-Nodes RES4LYF comfyui_cotracker_node"
+    BAKED_NODES="ComfyUI-Manager ComfyUI-KJNodes Civicomfy ComfyUI-RunpodDirect rgthree-comfy ComfyUI-VideoHelperSuite ComfyUI-WanVideoWrapper comfyui_controlnet_aux ComfyUI-Easy-Use ComfyUI-DepthCrafter-Nodes ComfyUI-WanVaceAdvanced ComfyUI-Mickmumpitz-Nodes RES4LYF comfyui_cotracker_node ComfyUI-Impact-Pack ComfyUI-RMBG"
     CURRENT=0
     INSTALLED=0
     for req in "$COMFYUI_DIR"/custom_nodes/*/requirements.txt; do
@@ -192,9 +192,9 @@ if [ ! -d "$COMFYUI_DIR" ] || [ ! -d "$VENV_DIR" ]; then
 
     MODELS=(
         "$MODELS_BASE/vae/wan_2.1_vae.safetensors|https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors"
-        #"$MODELS_BASE/clip/umt5_xxl_fp8_e4m3fn_scaled.safetensors|https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors"
-        #"$MODELS_BASE/loras/Wan2.1_T2V_14B_FusionX_LoRA.safetensors|https://huggingface.co/vrgamedevgirl84/Wan14BT2VFusioniX/resolve/main/FusionX_LoRa/Wan2.1_T2V_14B_FusionX_LoRA.safetensors"
-        #"$MODELS_BASE/diffusion_models/wan/wan-14B_vace_skyreels_v3_R2V_e4m3fn_v1.safetensors|https://huggingface.co/Inner-Reflections/VACE_Skyreels_V3_R2V_Merge/resolve/main/wan-14B_vace_skyreels_v3_R2V_e4m3fn_v1.safetensors"
+        "$MODELS_BASE/clip/umt5_xxl_fp8_e4m3fn_scaled.safetensors|https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors"
+        "$MODELS_BASE/loras/Wan2.1_T2V_14B_FusionX_LoRA.safetensors|https://huggingface.co/vrgamedevgirl84/Wan14BT2VFusioniX/resolve/main/FusionX_LoRa/Wan2.1_T2V_14B_FusionX_LoRA.safetensors"
+        "$MODELS_BASE/diffusion_models/wan/wan-14B_vace_skyreels_v3_R2V_e4m3fn_v1.safetensors|https://huggingface.co/Inner-Reflections/VACE_Skyreels_V3_R2V_Merge/resolve/main/wan-14B_vace_skyreels_v3_R2V_e4m3fn_v1.safetensors"
     )
 
     DL_PIDS=()
@@ -253,7 +253,7 @@ if ! python -c "import sageattention" 2>/dev/null && [ ! -f "$SAGE_FAILED_MARKER
         rm -rf SageAttention
         git clone https://github.com/thu-ml/SageAttention.git
         cd SageAttention
-        EXT_PARALLEL=4 NVCC_APPEND_FLAGS="--threads 8" MAX_JOBS=32 python setup.py install
+        EXT_PARALLEL=4 NVCC_APPEND_FLAGS="--threads 8" MAX_JOBS=32 pip install --no-build-isolation .
     )
     SAGE_BUILD_RC=$?
     rm -rf /tmp/SageAttention
