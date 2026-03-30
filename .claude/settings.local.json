@@ -18,7 +18,8 @@
       "Bash(done)",
       "Bash(find /c/Users/cemka/Documents/GitHub/Runpod-Templates -type f \\\\\\(-name requirements*.txt -o -name *.md -o -name *.json -path */workflows/* \\\\\\))",
       "Bash(cp:*)",
-      "Bash(docker exec:*)"
+      "Bash(docker exec:*)",
+      "Bash(gh issue:*)"
     ]
   }
 }

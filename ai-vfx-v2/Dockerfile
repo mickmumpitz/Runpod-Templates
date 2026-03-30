@@ -2,9 +2,9 @@ FROM runpod/comfyui:1.3.0-cuda12.8
 
 # ── Pin ComfyUI version (unshallow + checkout specific tag) ──────────────────
 # Change COMFYUI_VERSION to update. Use a tag (e.g. v0.17.2) or commit hash.
-ARG COMFYUI_VERSION=v0.17.2
+ARG COMFYUI_VERSION=v0.18.2
 RUN cd /opt/comfyui-baked && \
-    git fetch --unshallow --tags origin && \
+    git fetch --depth 1 origin tag "$COMFYUI_VERSION" && \
     git checkout "$COMFYUI_VERSION" && \
     pip install --no-cache-dir -r requirements.txt
 
@@ -32,8 +32,12 @@ RUN pip install --no-cache-dir \
         [ -f "$inst" ] && python3 "$inst" || true; \
     done
 
-# ── Pre-install ninja (needed for SageAttention build at first boot) ─────────
-RUN pip install --no-cache-dir ninja
+# ── Pre-install ninja + CUDA dev headers (needed for SageAttention build) ────
+# The base image has nvcc but not all CUDA headers (cusparse.h etc.)
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends libcusparse-dev-12-8 libcublas-dev-12-8 && \
+    rm -rf /var/lib/apt/lists/* && \
+    pip install --no-cache-dir ninja
 
 # Reset workdir so the container doesn't start inside custom_nodes
 WORKDIR /

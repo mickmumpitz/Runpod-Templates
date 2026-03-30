@@ -192,9 +192,9 @@ if [ ! -d "$COMFYUI_DIR" ] || [ ! -d "$VENV_DIR" ]; then
 
     MODELS=(
         "$MODELS_BASE/vae/wan_2.1_vae.safetensors|https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors"
-        "$MODELS_BASE/clip/umt5_xxl_fp8_e4m3fn_scaled.safetensors|https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors"
-        "$MODELS_BASE/loras/Wan2.1_T2V_14B_FusionX_LoRA.safetensors|https://huggingface.co/vrgamedevgirl84/Wan14BT2VFusioniX/resolve/main/FusionX_LoRa/Wan2.1_T2V_14B_FusionX_LoRA.safetensors"
-        "$MODELS_BASE/diffusion_models/wan/wan-14B_vace_skyreels_v3_R2V_e4m3fn_v1.safetensors|https://huggingface.co/Inner-Reflections/VACE_Skyreels_V3_R2V_Merge/resolve/main/wan-14B_vace_skyreels_v3_R2V_e4m3fn_v1.safetensors"
+        #"$MODELS_BASE/clip/umt5_xxl_fp8_e4m3fn_scaled.safetensors|https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors"
+        #"$MODELS_BASE/loras/Wan2.1_T2V_14B_FusionX_LoRA.safetensors|https://huggingface.co/vrgamedevgirl84/Wan14BT2VFusioniX/resolve/main/FusionX_LoRa/Wan2.1_T2V_14B_FusionX_LoRA.safetensors"
+        #"$MODELS_BASE/diffusion_models/wan/wan-14B_vace_skyreels_v3_R2V_e4m3fn_v1.safetensors|https://huggingface.co/Inner-Reflections/VACE_Skyreels_V3_R2V_Merge/resolve/main/wan-14B_vace_skyreels_v3_R2V_e4m3fn_v1.safetensors"
     )
 
     DL_PIDS=()
@@ -237,8 +237,16 @@ if ! python -c "import sageattention" 2>/dev/null && [ ! -f "$SAGE_FAILED_MARKER
     echo "Building SageAttention from source..."
     GPU_COMPUTE_CAP=$(nvidia-smi --query-gpu=compute_cap --format=csv,noheader | head -1)
     echo "Detected GPU compute capability: $GPU_COMPUTE_CAP"
-    if (
-        export TORCH_CUDA_ARCH_LIST="$GPU_COMPUTE_CAP"
+
+    # Build v2 from source in a subshell to isolate env changes (CUDA_HOME, PATH, cwd)
+    # Always include 8.0: SageAttention's _qattn_sm80 base extension needs sm80
+    # gencode even on newer GPUs (its CUDA sources use SM80 intrinsics)
+    (
+        if [ "$GPU_COMPUTE_CAP" = "8.0" ]; then
+            export TORCH_CUDA_ARCH_LIST="8.0"
+        else
+            export TORCH_CUDA_ARCH_LIST="8.0;$GPU_COMPUTE_CAP"
+        fi
         export CUDA_HOME=/usr/local/cuda-12.8
         export PATH=$CUDA_HOME/bin:$PATH
         cd /tmp
@@ -246,12 +254,21 @@ if ! python -c "import sageattention" 2>/dev/null && [ ! -f "$SAGE_FAILED_MARKER
         git clone https://github.com/thu-ml/SageAttention.git
         cd SageAttention
         EXT_PARALLEL=4 NVCC_APPEND_FLAGS="--threads 8" MAX_JOBS=32 python setup.py install
-        cd /tmp && rm -rf SageAttention
-    ); then
-        echo "SageAttention installed successfully"
+    )
+    SAGE_BUILD_RC=$?
+    rm -rf /tmp/SageAttention
+    if [ $SAGE_BUILD_RC -ne 0 ]; then
+        echo "WARNING: SageAttention source build failed."
     else
-        echo "WARNING: SageAttention build failed. Continuing without it."
+        echo "SageAttention built from source"
+    fi
+
+    # Verify the install actually works
+    if ! python -c "import sageattention" 2>/dev/null; then
+        echo "WARNING: SageAttention is not importable. Continuing without it."
         touch "$SAGE_FAILED_MARKER"
+    else
+        echo "SageAttention verified working"
     fi
 else
     echo "SageAttention already installed (or build previously failed), skipping..."
@@ -268,6 +285,17 @@ if [ -s "$ARGS_FILE" ]; then
     if [ ! -z "$CUSTOM_ARGS" ]; then
         FIXED_ARGS="$FIXED_ARGS $CUSTOM_ARGS"
     fi
+fi
+
+# Auto-add --use-sage-attention if sageattention is available and not already in args
+if python -c "import sageattention" 2>/dev/null; then
+    case "$FIXED_ARGS" in
+        *--use-sage-attention*) ;;
+        *) FIXED_ARGS="$FIXED_ARGS --use-sage-attention" ;;
+    esac
+else
+    # Strip --use-sage-attention if present but package unavailable
+    FIXED_ARGS=$(echo "$FIXED_ARGS" | sed 's/--use-sage-attention//g' | tr -s ' ')
 fi
 
 echo "Starting ComfyUI with args: $FIXED_ARGS"
