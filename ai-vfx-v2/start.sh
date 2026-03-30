@@ -253,7 +253,7 @@ if ! python -c "import sageattention" 2>/dev/null && [ ! -f "$SAGE_FAILED_MARKER
         rm -rf SageAttention
         git clone https://github.com/thu-ml/SageAttention.git
         cd SageAttention
-        EXT_PARALLEL=4 NVCC_APPEND_FLAGS="--threads 8" MAX_JOBS=32 pip install --no-build-isolation .
+        EXT_PARALLEL=4 NVCC_APPEND_FLAGS="--threads 8" MAX_JOBS=32 python setup.py install
     )
     SAGE_BUILD_RC=$?
     rm -rf /tmp/SageAttention
