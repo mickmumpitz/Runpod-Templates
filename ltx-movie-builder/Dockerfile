@@ -1,4 +1,4 @@
-FROM runpod/comfyui:1.3.0-cuda12.8
+FROM runpod/comfyui:1.4.0-cuda12.8
 
 # ── Pin ComfyUI version (unshallow + checkout specific tag) ──────────────────
 # Change COMFYUI_VERSION to update. Use a tag (e.g. v0.17.2) or commit hash.
