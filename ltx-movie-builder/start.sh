@@ -199,6 +199,7 @@ if [ ! -d "$COMFYUI_DIR" ] || [ ! -d "$VENV_DIR" ]; then
         "$MODELS_BASE/diffusion_models/ltx-2.3-22b-dev_transformer_only_fp8_scaled.safetensors|https://huggingface.co/Kijai/LTX2.3_comfy/resolve/main/diffusion_models/ltx-2.3-22b-dev_transformer_only_fp8_scaled.safetensors"
         "$MODELS_BASE/loras/ltx-2.3-22b-distilled-lora-384-1.1.safetensors|https://huggingface.co/Lightricks/LTX-2.3/resolve/main/ltx-2.3-22b-distilled-lora-384-1.1.safetensors"
         "$MODELS_BASE/loras/ltx-2.3-id-lora-talkvid-3k.safetensors|https://huggingface.co/Comfy-Org/ltx-2.3/resolve/main/split_files/loras/ltx-2.3-id-lora-talkvid-3k.safetensors"
+        "$MODELS_BASE/loras/ltx-2.3-id-lora-celebvhq-3k.safetensors|https://huggingface.co/Comfy-Org/ltx-2.3/resolve/main/split_files/loras/ltx-2.3-id-lora-celebvhq-3k.safetensors"
         "$MODELS_BASE/vae/LTX23_video_vae_bf16.safetensors|https://huggingface.co/Kijai/LTX2.3_comfy/resolve/main/vae/LTX23_video_vae_bf16.safetensors"
         "$MODELS_BASE/vae/LTX23_audio_vae_bf16.safetensors|https://huggingface.co/Kijai/LTX2.3_comfy/resolve/main/vae/LTX23_audio_vae_bf16.safetensors"
         "$MODELS_BASE/latent_upscale_models/ltx-2.3-spatial-upscaler-x2-1.1.safetensors|https://huggingface.co/Lightricks/LTX-2.3/resolve/main/ltx-2.3-spatial-upscaler-x2-1.1.safetensors"
