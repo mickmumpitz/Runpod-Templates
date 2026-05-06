@@ -205,6 +205,9 @@ if [ ! -d "$COMFYUI_DIR" ] || [ ! -d "$VENV_DIR" ]; then
         "$MODELS_BASE/latent_upscale_models/ltx-2.3-spatial-upscaler-x2-1.1.safetensors|https://huggingface.co/Lightricks/LTX-2.3/resolve/main/ltx-2.3-spatial-upscaler-x2-1.1.safetensors"
         "$MODELS_BASE/text_encoders/gemma_3_12B_it_fp8_scaled.safetensors|https://huggingface.co/Comfy-Org/ltx-2/resolve/main/split_files/text_encoders/gemma_3_12B_it_fp8_scaled.safetensors"
         "$MODELS_BASE/text_encoders/ltx-2.3_text_projection_bf16.safetensors|https://huggingface.co/Kijai/LTX2.3_comfy/resolve/main/text_encoders/ltx-2.3_text_projection_bf16.safetensors"
+        "$MODELS_BASE/diffusion_models/flux-2-klein-4b-fp8.safetensors|https://huggingface.co/black-forest-labs/FLUX.2-klein-4b-fp8/resolve/main/flux-2-klein-4b-fp8.safetensors"
+        "$MODELS_BASE/text_encoders/qwen_3_4b_fp4_flux2.safetensors|https://huggingface.co/Comfy-Org/vae-text-encorder-for-flux-klein-4b/resolve/main/split_files/text_encoders/qwen_3_4b_fp4_flux2.safetensors"
+        "$MODELS_BASE/loras/flux-2-klein-4B-360-erp-outpaint-lora_V1.safetensors|https://huggingface.co/nomadoor/flux-2-klein-4B-360-erp-outpaint-lora/resolve/main/flux-2-klein-4B-360-erp-outpaint-lora_V1.safetensors"
     )
 
     DL_PIDS=()
