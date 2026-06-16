@@ -1,0 +1,2 @@
+# Add your custom ComfyUI arguments here (one per line)
+--enable-cors-header
