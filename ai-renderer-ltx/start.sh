@@ -182,27 +182,46 @@ if [ ! -d "$COMFYUI_DIR" ] || [ ! -d "$VENV_DIR" ]; then
     fi
 
     # Download models from Hugging Face
-    # Model set for: 260603_LTX2-3_3D-RENDERING_LIP-SNYC_v05 (tested "dev FP8 + distilled LoRA" config)
+    # Model set for:
+    #   260603_LTX2-3_3D-RENDERING_LIP-SNYC_v06 (LTX-2.3 "dev FP8 + distilled LoRA" config)
+    #   260615_MICKMUMPITZ_FLUX_KLEIN_9B        (Flux.2 Klein 9B image-edit config)
     echo "Downloading models from Hugging Face..."
     MODELS_BASE="$COMFYUI_DIR/models"
     mkdir -p "$MODELS_BASE/checkpoints" \
              "$MODELS_BASE/text_encoders" \
-             "$MODELS_BASE/loras/ltx"
+             "$MODELS_BASE/diffusion_models" \
+             "$MODELS_BASE/vae" \
+             "$MODELS_BASE/loras"
 
     # filepath|url  — files are saved under the exact name the workflow's loader
     # nodes reference (some differ from the source repo's filename; wget -O renames).
+    #
+    # NOTE: flux-2-klein-9b-fp8.safetensors is intentionally NOT downloaded. It is a
+    # gated model that requires a Hugging Face account with access to
+    # black-forest-labs/FLUX.2-klein. All of its dependencies below are NOT gated and
+    # are downloaded so the 9B workflow only needs the UNET supplied manually
+    # (drop it into models/diffusion_models). The free 4B model + its text encoder are
+    # additionally downloaded so the workflow can be switched to run without HF access —
+    # see the note inside 260615_MICKMUMPITZ_FLUX_KLEIN_9B for how to set it up.
     MODELS=(
-        # ── Checkpoints (CheckpointLoaderSimple + LTXVAudioVAELoader) ──
+        # ── LTX-2.3 — Checkpoints (CheckpointLoaderSimple + LTXVAudioVAELoader) ──
         "$MODELS_BASE/checkpoints/ltx-2.3-22b-dev-fp8.safetensors|https://huggingface.co/Lightricks/LTX-2.3-fp8/resolve/main/ltx-2.3-22b-dev-fp8.safetensors"
         "$MODELS_BASE/checkpoints/ltx-2.3-22b-distilled-fp8.safetensors|https://huggingface.co/Lightricks/LTX-2.3-fp8/resolve/main/ltx-2.3-22b-distilled-fp8.safetensors"
-        # ── Text encoder (LTXAVTextEncoderLoader) ──
+        # ── LTX-2.3 — Text encoder (LTXAVTextEncoderLoader) ──
         "$MODELS_BASE/text_encoders/gemma_3_12B_it_fp8_e4m3fn.safetensors|https://huggingface.co/GitMylo/LTX-2-comfy_gemma_fp8_e4m3fn/resolve/main/gemma_3_12B_it_fp8_e4m3fn.safetensors"
-        # ── LoRAs (LoraLoaderModelOnly + LTXICLoRALoaderModelOnly) ──
+        # ── LTX-2.3 — LoRAs (LoraLoaderModelOnly + LTXICLoRALoaderModelOnly) ──
         "$MODELS_BASE/loras/ltx-2.3-22b-distilled-lora-384-1.1.safetensors|https://huggingface.co/Lightricks/LTX-2.3/resolve/main/ltx-2.3-22b-distilled-lora-384-1.1.safetensors"
         "$MODELS_BASE/loras/ltx-2-19b-ic-lora-detailer.safetensors|https://huggingface.co/Lightricks/LTX-2-19b-IC-LoRA-Detailer/resolve/main/ltx-2-19b-ic-lora-detailer.safetensors"
-        "$MODELS_BASE/loras/ltx/LTX-2.3-OmniNFT-RL-Lora_bf16.safetensors|https://huggingface.co/Kijai/LTX2.3_comfy/resolve/main/loras/LTX-2.3-OmniNFT-RL-Lora_bf16.safetensors"
+        "$MODELS_BASE/loras/LTX-2.3-OmniNFT-RL-Lora_bf16.safetensors|https://huggingface.co/Kijai/LTX2.3_comfy/resolve/main/loras/LTX-2.3-OmniNFT-RL-Lora_bf16.safetensors"
         # Saved under the node-expected name (ltx-2-19b-...); source repo ships the 22b build (only file available there).
-        "$MODELS_BASE/loras/ltx/ltx-2-19b-ic-lora-union-control-ref0.5.safetensors|https://huggingface.co/Lightricks/LTX-2.3-22b-IC-LoRA-Union-Control/resolve/main/ltx-2.3-22b-ic-lora-union-control-ref0.5.safetensors"
+        "$MODELS_BASE/loras/ltx-2-19b-ic-lora-union-control-ref0.5.safetensors|https://huggingface.co/Lightricks/LTX-2.3-22b-IC-LoRA-Union-Control/resolve/main/ltx-2.3-22b-ic-lora-union-control-ref0.5.safetensors"
+        # ── Flux.2 Klein 9B — deps (UNET itself is gated and omitted; see note above) ──
+        "$MODELS_BASE/loras/Flux2-Klein-9B-consistency-V2.safetensors|https://huggingface.co/dx8152/Flux2-Klein-9B-Consistency/resolve/main/Flux2-Klein-9B-consistency-V2.safetensors"
+        "$MODELS_BASE/text_encoders/qwen_3_8b_fp8mixed.safetensors|https://huggingface.co/Comfy-Org/vae-text-encorder-for-flux-klein-9b/resolve/main/split_files/text_encoders/qwen_3_8b_fp8mixed.safetensors"
+        "$MODELS_BASE/vae/flux2-vae.safetensors|https://huggingface.co/Comfy-Org/flux2-dev/resolve/main/split_files/vae/flux2-vae.safetensors"
+        # ── Flux.2 Klein 4B — free fallback (UNETLoader + CLIPLoader); shares flux2-vae above ──
+        "$MODELS_BASE/diffusion_models/flux-2-klein-4b-fp8.safetensors|https://huggingface.co/black-forest-labs/FLUX.2-klein-4b-fp8/resolve/main/flux-2-klein-4b-fp8.safetensors"
+        "$MODELS_BASE/text_encoders/qwen_3_4b_fp4_flux2.safetensors|https://huggingface.co/Comfy-Org/vae-text-encorder-for-flux-klein-4b/resolve/main/split_files/text_encoders/qwen_3_4b_fp4_flux2.safetensors"
     )
 
     DL_PIDS=()
