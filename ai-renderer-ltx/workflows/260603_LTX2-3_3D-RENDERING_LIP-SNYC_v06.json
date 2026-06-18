@@ -1,8 +1,8 @@
 {
   "id": "95725802-e4f5-420a-979e-e505775ad137",
   "revision": 0,
-  "last_node_id": 6278,
-  "last_link_id": 14781,
+  "last_node_id": 6279,
+  "last_link_id": 14785,
   "nodes": [
     {
       "id": 5865,
@@ -1124,183 +1124,6 @@
       "bgcolor": "#c0c0c0"
     },
     {
-      "id": 6100,
-      "type": "BatchColorCorrector",
-      "pos": [
-        3050,
-        470
-      ],
-      "size": [
-        297.16326904296875,
-        594
-      ],
-      "flags": {
-        "collapsed": true
-      },
-      "order": 63,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 14222
-        },
-        {
-          "name": "reference_image",
-          "shape": 7,
-          "type": "IMAGE",
-          "link": null
-        },
-        {
-          "name": "mask",
-          "shape": 7,
-          "type": "MASK",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "links": [
-            14609
-          ]
-        },
-        {
-          "name": "palette_data",
-          "type": "STRING",
-          "links": null
-        },
-        {
-          "name": "histogram",
-          "type": "IMAGE",
-          "links": null
-        },
-        {
-          "name": "palette_image",
-          "type": "IMAGE",
-          "links": null
-        },
-        {
-          "name": "frame_count",
-          "type": "INT",
-          "links": null
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfyui-mickmumpitz-nodes",
-        "ver": "5bc01c8b0a173bb1f3c7c5b3553a574ffb500e8c",
-        "Node name for S&R": "BatchColorCorrector"
-      },
-      "widgets_values": [
-        "Manual",
-        16,
-        true,
-        true,
-        "Natural",
-        0.4,
-        0.8,
-        true,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        -0.2,
-        -0.1,
-        0,
-        0,
-        false,
-        0.5
-      ]
-    },
-    {
-      "id": 6099,
-      "type": "ImageResizeKJv2",
-      "pos": [
-        3050,
-        510
-      ],
-      "size": [
-        270,
-        336
-      ],
-      "flags": {
-        "collapsed": true
-      },
-      "order": 55,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "link": 14216
-        },
-        {
-          "name": "mask",
-          "shape": 7,
-          "type": "MASK",
-          "link": null
-        },
-        {
-          "name": "width",
-          "type": "INT",
-          "widget": {
-            "name": "width"
-          },
-          "link": 14214
-        },
-        {
-          "name": "height",
-          "type": "INT",
-          "widget": {
-            "name": "height"
-          },
-          "link": 14215
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            14222
-          ]
-        },
-        {
-          "name": "width",
-          "type": "INT",
-          "links": null
-        },
-        {
-          "name": "height",
-          "type": "INT",
-          "links": null
-        },
-        {
-          "name": "mask",
-          "type": "MASK",
-          "links": null
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfyui-kjnodes",
-        "ver": "38cccdee6a484a702e4ac1a8b9a3cee0c4ed83f4",
-        "Node name for S&R": "ImageResizeKJv2"
-      },
-      "widgets_values": [
-        512,
-        512,
-        "nearest-exact",
-        "stretch",
-        "0, 0, 0",
-        "center",
-        2,
-        "cpu"
-      ]
-    },
-    {
       "id": 6097,
       "type": "ImageResizeKJv2",
       "pos": [
@@ -1314,7 +1137,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 65,
+      "order": 64,
       "mode": 0,
       "inputs": [
         {
@@ -1386,51 +1209,6 @@
       ]
     },
     {
-      "id": 6096,
-      "type": "ImageBlend",
-      "pos": [
-        3350,
-        430
-      ],
-      "size": [
-        330,
-        110
-      ],
-      "flags": {},
-      "order": 71,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "image1",
-          "type": "IMAGE",
-          "link": 14610
-        },
-        {
-          "name": "image2",
-          "type": "IMAGE",
-          "link": 14609
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            14758
-          ]
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.18.2",
-        "Node name for S&R": "ImageBlend"
-      },
-      "widgets_values": [
-        1,
-        "screen"
-      ]
-    },
-    {
       "id": 6095,
       "type": "CannyEdgePreprocessor",
       "pos": [
@@ -1442,7 +1220,7 @@
         106
       ],
       "flags": {},
-      "order": 58,
+      "order": 57,
       "mode": 0,
       "inputs": [
         {
@@ -1474,86 +1252,6 @@
       "bgcolor": "#c0c0c0"
     },
     {
-      "id": 6219,
-      "type": "VHS_VideoCombine",
-      "pos": [
-        3050,
-        700
-      ],
-      "size": [
-        640,
-        334
-      ],
-      "flags": {
-        "collapsed": false
-      },
-      "order": 76,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 14758
-        },
-        {
-          "name": "audio",
-          "shape": 7,
-          "type": "AUDIO",
-          "link": null
-        },
-        {
-          "name": "meta_batch",
-          "shape": 7,
-          "type": "VHS_BatchManager",
-          "link": null
-        },
-        {
-          "name": "vae",
-          "shape": 7,
-          "type": "VAE",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "Filenames",
-          "type": "VHS_FILENAMES",
-          "links": []
-        }
-      ],
-      "title": "FINAL VIDEO (INPAINTING)",
-      "properties": {
-        "cnr_id": "comfyui-videohelpersuite",
-        "ver": "2984ec4c4b93292421888f38db74a5e8802a8ff8",
-        "Node name for S&R": "VHS_VideoCombine"
-      },
-      "widgets_values": {
-        "frame_rate": 24,
-        "loop_count": 0,
-        "filename_prefix": "LTX2-3_LIP-SYNC",
-        "format": "video/h264-mp4",
-        "pix_fmt": "yuv420p",
-        "crf": 19,
-        "save_metadata": true,
-        "trim_to_audio": false,
-        "pingpong": false,
-        "save_output": false,
-        "videopreview": {
-          "hidden": false,
-          "paused": false,
-          "params": {
-            "filename": "LTX2-3_LIP-SYNC_00009.mp4",
-            "subfolder": "",
-            "type": "temp",
-            "format": "video/h264-mp4",
-            "frame_rate": 24,
-            "workflow": "LTX2-3_LIP-SYNC_00009.png",
-            "fullpath": "D:\\comfy\\ComfyUI_windows_portable\\ComfyUI\\temp\\LTX2-3_LIP-SYNC_00009.mp4"
-          }
-        }
-      }
-    },
-    {
       "id": 6243,
       "type": "SolidMask",
       "pos": [
@@ -1567,7 +1265,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 52,
+      "order": 48,
       "mode": 0,
       "inputs": [
         {
@@ -1621,7 +1319,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 57,
+      "order": 58,
       "mode": 0,
       "inputs": [
         {
@@ -1684,59 +1382,6 @@
       ]
     },
     {
-      "id": 6197,
-      "type": "GrowMaskWithBlur",
-      "pos": [
-        2580,
-        580
-      ],
-      "size": [
-        400,
-        260
-      ],
-      "flags": {},
-      "order": 64,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "mask",
-          "type": "MASK",
-          "link": 14629
-        }
-      ],
-      "outputs": [
-        {
-          "name": "mask",
-          "type": "MASK",
-          "links": [
-            14761
-          ]
-        },
-        {
-          "name": "mask_inverted",
-          "type": "MASK",
-          "links": null
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfyui-kjnodes",
-        "ver": "9c3255f39cd2ea0ebf94a2016af4bd2e5d6eb91b",
-        "Node name for S&R": "GrowMaskWithBlur"
-      },
-      "widgets_values": [
-        -75,
-        0,
-        false,
-        false,
-        0,
-        1,
-        1,
-        false
-      ],
-      "color": "#d4d4d4",
-      "bgcolor": "#c0c0c0"
-    },
-    {
       "id": 6250,
       "type": "SetNode",
       "pos": [
@@ -1750,7 +1395,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 75,
+      "order": 76,
       "mode": 0,
       "inputs": [
         {
@@ -1799,9 +1444,7 @@
         {
           "name": "MASK",
           "type": "MASK",
-          "links": [
-            14773
-          ]
+          "links": []
         }
       ],
       "title": "Get_MouthMask",
@@ -1851,7 +1494,7 @@
         "Node name for S&R": "LoadImage"
       },
       "widgets_values": [
-        "ComfyUI_00346_.png",
+        "BusinessWoman_Frame50__00002_.webp",
         "image"
       ],
       "color": "#d4d4d4",
@@ -1937,54 +1580,6 @@
       "widgets_values": [
         "apply_the_style_from_the_color_reference_image_to_the_black_and_white_3d_layout_match_the_compositi_su6k5oor2c1k4nhq3dm9_0.png",
         "image"
-      ],
-      "color": "#d4d4d4",
-      "bgcolor": "#c0c0c0"
-    },
-    {
-      "id": 6244,
-      "type": "ComfySwitchNode",
-      "pos": [
-        2580,
-        420
-      ],
-      "size": [
-        400,
-        80
-      ],
-      "flags": {},
-      "order": 70,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "on_false",
-          "type": "MASK",
-          "link": 14762
-        },
-        {
-          "name": "on_true",
-          "type": "MASK",
-          "link": 14761
-        }
-      ],
-      "outputs": [
-        {
-          "name": "output",
-          "type": "MASK",
-          "links": [
-            14769,
-            14772
-          ]
-        }
-      ],
-      "title": "USE MASK VIDEO?",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.22.3",
-        "Node name for S&R": "ComfySwitchNode"
-      },
-      "widgets_values": [
-        false
       ],
       "color": "#d4d4d4",
       "bgcolor": "#c0c0c0"
@@ -2163,7 +1758,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 48,
+      "order": 49,
       "mode": 0,
       "inputs": [
         {
@@ -2190,49 +1785,6 @@
       ]
     },
     {
-      "id": 5883,
-      "type": "LoadAudio",
-      "pos": [
-        1230,
-        1600
-      ],
-      "size": [
-        400,
-        140
-      ],
-      "flags": {},
-      "order": 14,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "AUDIO",
-          "type": "AUDIO",
-          "links": [
-            14770
-          ]
-        }
-      ],
-      "title": "4. Load Audio File here - recommend MP3",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.7.0",
-        "Node name for S&R": "LoadAudio",
-        "ue_properties": {
-          "widget_ue_connectable": {},
-          "version": "7.5.2",
-          "input_ue_unconnectable": {}
-        }
-      },
-      "widgets_values": [
-        "030_BM_VO_v01.wav",
-        null,
-        null
-      ],
-      "color": "#d4d4d4",
-      "bgcolor": "#c0c0c0"
-    },
-    {
       "id": 6256,
       "type": "GetNode",
       "pos": [
@@ -2246,7 +1798,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 15,
+      "order": 14,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -2283,7 +1835,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 16,
+      "order": 15,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -2320,7 +1872,7 @@
       "flags": {
         "collapsed": true
       },
-      "order": 17,
+      "order": 16,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -2470,119 +2022,6 @@
       "bgcolor": "#3f5159"
     },
     {
-      "id": 5893,
-      "type": "VHS_LoadVideo",
-      "pos": [
-        1230,
-        920
-      ],
-      "size": [
-        400,
-        538
-      ],
-      "flags": {},
-      "order": 49,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "meta_batch",
-          "shape": 7,
-          "type": "VHS_BatchManager",
-          "link": null
-        },
-        {
-          "name": "vae",
-          "shape": 7,
-          "type": "VAE",
-          "link": null
-        },
-        {
-          "name": "custom_width",
-          "type": "INT",
-          "widget": {
-            "name": "custom_width"
-          },
-          "link": 14163
-        },
-        {
-          "name": "custom_height",
-          "type": "INT",
-          "widget": {
-            "name": "custom_height"
-          },
-          "link": 14164
-        },
-        {
-          "name": "frame_load_cap",
-          "type": "INT",
-          "widget": {
-            "name": "frame_load_cap"
-          },
-          "link": 14699
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            14119,
-            14216
-          ]
-        },
-        {
-          "name": "frame_count",
-          "type": "INT",
-          "links": null
-        },
-        {
-          "name": "audio",
-          "type": "AUDIO",
-          "links": null
-        },
-        {
-          "name": "video_info",
-          "type": "VHS_VIDEOINFO",
-          "links": [
-            13804
-          ]
-        }
-      ],
-      "title": "DEPTH",
-      "properties": {
-        "cnr_id": "comfyui-videohelpersuite",
-        "ver": "449839959f0153fb8a57211a9364c55163935ca9",
-        "Node name for S&R": "VHS_LoadVideo"
-      },
-      "widgets_values": {
-        "video": "030_BW_DEPTH_v01_0001-0108.mkv",
-        "force_rate": 24,
-        "custom_width": 1920,
-        "custom_height": 1080,
-        "frame_load_cap": 0,
-        "skip_first_frames": 0,
-        "select_every_nth": 1,
-        "format": "AnimateDiff",
-        "videopreview": {
-          "hidden": false,
-          "paused": false,
-          "params": {
-            "filename": "030_BW_DEPTH_v01_0001-0108.mkv",
-            "type": "input",
-            "format": "video/mkv",
-            "force_rate": 24,
-            "custom_width": 1920,
-            "custom_height": 1080,
-            "frame_load_cap": 0,
-            "skip_first_frames": 0,
-            "select_every_nth": 1
-          }
-        }
-      },
-      "color": "#d4d4d4",
-      "bgcolor": "#c0c0c0"
-    },
-    {
       "id": 6094,
       "type": "VHS_LoadVideo",
       "pos": [
@@ -2666,7 +2105,7 @@
         "Node name for S&R": "VHS_LoadVideo"
       },
       "widgets_values": {
-        "video": "030_BW_CLAY_v01_0001-0108.mkv",
+        "video": "BusinessWoman_CLAy_Shortened2.mp4",
         "force_rate": 24,
         "custom_width": 1920,
         "custom_height": 1080,
@@ -2678,9 +2117,9 @@
           "hidden": false,
           "paused": false,
           "params": {
-            "filename": "030_BW_CLAY_v01_0001-0108.mkv",
+            "filename": "BusinessWoman_CLAy_Shortened2.mp4",
             "type": "input",
-            "format": "video/mkv",
+            "format": "video/mp4",
             "force_rate": 24,
             "custom_width": 1920,
             "custom_height": 1080,
@@ -2705,7 +2144,7 @@
         538
       ],
       "flags": {},
-      "order": 50,
+      "order": 52,
       "mode": 0,
       "inputs": [
         {
@@ -2776,7 +2215,7 @@
         "Node name for S&R": "VHS_LoadVideo"
       },
       "widgets_values": {
-        "video": "030_BW_MOUTH_v01_0001-0108.mp4",
+        "video": "BusinessWoman_MASK_Shortened2.mp4",
         "force_rate": 24,
         "custom_width": 1920,
         "custom_height": 1080,
@@ -2788,7 +2227,7 @@
           "hidden": false,
           "paused": false,
           "params": {
-            "filename": "030_BW_MOUTH_v01_0001-0108.mp4",
+            "filename": "BusinessWoman_MASK_Shortened2.mp4",
             "type": "input",
             "format": "video/mp4",
             "force_rate": 24,
@@ -2815,7 +2254,7 @@
         140
       ],
       "flags": {},
-      "order": 18,
+      "order": 17,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -2888,7 +2327,7 @@
         120
       ],
       "flags": {},
-      "order": 19,
+      "order": 18,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -2899,45 +2338,6 @@
       ],
       "color": "#97651BFF",
       "bgcolor": "#B67921FF"
-    },
-    {
-      "id": 6214,
-      "type": "PrimitiveInt",
-      "pos": [
-        840,
-        880
-      ],
-      "size": [
-        300,
-        90
-      ],
-      "flags": {},
-      "order": 20,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "INT",
-          "type": "INT",
-          "links": [
-            14699,
-            14700,
-            14701
-          ]
-        }
-      ],
-      "title": "FRAME LOAD CAP",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.22.0",
-        "Node name for S&R": "PrimitiveInt"
-      },
-      "widgets_values": [
-        108,
-        "fixed"
-      ],
-      "color": "#d4d4d4",
-      "bgcolor": "#c0c0c0"
     },
     {
       "id": 6082,
@@ -2951,7 +2351,7 @@
         150
       ],
       "flags": {},
-      "order": 21,
+      "order": 19,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -3006,7 +2406,7 @@
         26
       ],
       "flags": {},
-      "order": 22,
+      "order": 20,
       "mode": 0,
       "inputs": [
         {
@@ -3048,7 +2448,7 @@
       "flags": {
         "allow_interaction": true
       },
-      "order": 23,
+      "order": 21,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -3080,7 +2480,7 @@
       "flags": {
         "allow_interaction": true
       },
-      "order": 24,
+      "order": 22,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -3110,7 +2510,7 @@
         26
       ],
       "flags": {},
-      "order": 25,
+      "order": 23,
       "mode": 0,
       "inputs": [
         {
@@ -3152,7 +2552,7 @@
       "flags": {
         "allow_interaction": true
       },
-      "order": 26,
+      "order": 24,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -3182,7 +2582,7 @@
         26
       ],
       "flags": {},
-      "order": 27,
+      "order": 25,
       "mode": 0,
       "inputs": [
         {
@@ -3224,7 +2624,7 @@
       "flags": {
         "allow_interaction": true
       },
-      "order": 28,
+      "order": 26,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -3251,10 +2651,10 @@
       ],
       "size": [
         722.5723947977463,
-        1049.221306253316
+        1025.221306253316
       ],
       "flags": {},
-      "order": 74,
+      "order": 75,
       "mode": 0,
       "inputs": [
         {
@@ -3312,7 +2712,7 @@
           "label": "VideoInput",
           "name": "input",
           "type": "IMAGE,MASK",
-          "link": 14773
+          "link": 14785
         },
         {
           "name": "attention_mask",
@@ -3542,42 +2942,6 @@
       "widgets_values": []
     },
     {
-      "id": 6203,
-      "type": "PrimitiveStringMultiline",
-      "pos": [
-        3760,
-        1520
-      ],
-      "size": [
-        720,
-        310
-      ],
-      "flags": {},
-      "order": 29,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            14651
-          ]
-        }
-      ],
-      "title": "PROMPT",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.19.3",
-        "Node name for S&R": "PrimitiveStringMultiline"
-      },
-      "widgets_values": [
-        "A cute puppet animation extreme low angle shot looking up at the wooden ceiling: At first a green backpack slides from left to right on the ground and with swift jump, a young bronwn bear emerges. The young brown bear on the right stands up with a swift movement and waves at a woman standing on the right, the bear is wearing red lobby boy clothes and carrying a giant green backpack. The woman on the left wears blue and has a surprised look on her face as she follows the bears movement with her eyes. In the background an uninterested bear is reading a newspaper. In the end he raises the newspaper. After the brown bear on the right stands up, he starts talking as he waves. A board with keys hangs in the background on the large wooden wall covering the whole background. The professional animation features heavy use of squash and stretch, anticipation and exaggeration. \n\nThe miniature scene is shot on a macro camera with an intense blurred bokeh. The woman looks at the bear on the right. The room has moody warm lighting."
-      ],
-      "color": "#d4d4d4",
-      "bgcolor": "#c0c0c0"
-    },
-    {
       "id": 6054,
       "type": "MarkdownNote",
       "pos": [
@@ -3589,7 +2953,7 @@
         1070
       ],
       "flags": {},
-      "order": 30,
+      "order": 27,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -3612,7 +2976,7 @@
         26
       ],
       "flags": {},
-      "order": 31,
+      "order": 28,
       "mode": 0,
       "inputs": [
         {
@@ -3654,7 +3018,7 @@
       "flags": {
         "allow_interaction": true
       },
-      "order": 32,
+      "order": 29,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -3686,7 +3050,7 @@
       "flags": {
         "allow_interaction": true
       },
-      "order": 33,
+      "order": 30,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -3718,7 +3082,7 @@
       "flags": {
         "allow_interaction": true
       },
-      "order": 34,
+      "order": 31,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -3750,7 +3114,7 @@
       "flags": {
         "allow_interaction": true
       },
-      "order": 35,
+      "order": 32,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -3782,7 +3146,7 @@
       "flags": {
         "allow_interaction": true
       },
-      "order": 36,
+      "order": 33,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -3814,7 +3178,7 @@
       "flags": {
         "allow_interaction": true
       },
-      "order": 37,
+      "order": 34,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -3846,7 +3210,7 @@
       "flags": {
         "allow_interaction": true
       },
-      "order": 38,
+      "order": 35,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -3878,7 +3242,7 @@
       "flags": {
         "allow_interaction": true
       },
-      "order": 39,
+      "order": 36,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -3910,7 +3274,7 @@
       "flags": {
         "allow_interaction": true
       },
-      "order": 40,
+      "order": 37,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -4031,7 +3395,7 @@
       "flags": {
         "allow_interaction": true
       },
-      "order": 41,
+      "order": 38,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -4063,7 +3427,7 @@
       "flags": {
         "allow_interaction": true
       },
-      "order": 42,
+      "order": 39,
       "mode": 0,
       "inputs": [],
       "outputs": [],
@@ -4093,7 +3457,7 @@
         26
       ],
       "flags": {},
-      "order": 43,
+      "order": 40,
       "mode": 0,
       "inputs": [
         {
@@ -4120,6 +3484,643 @@
       "color": "#f2f2f2",
       "bgcolor": "#dedede",
       "shape": 1
+    },
+    {
+      "id": 5883,
+      "type": "LoadAudio",
+      "pos": [
+        1230,
+        1600
+      ],
+      "size": [
+        400,
+        140
+      ],
+      "flags": {},
+      "order": 41,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "AUDIO",
+          "type": "AUDIO",
+          "links": [
+            14770
+          ]
+        }
+      ],
+      "title": "4. Load Audio File here - recommend MP3",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.7.0",
+        "Node name for S&R": "LoadAudio",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.2",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "BusinessWoman_AUDIO_Shortened2.mp3",
+        null,
+        null
+      ],
+      "color": "#d4d4d4",
+      "bgcolor": "#c0c0c0"
+    },
+    {
+      "id": 6203,
+      "type": "PrimitiveStringMultiline",
+      "pos": [
+        3760,
+        1520
+      ],
+      "size": [
+        720,
+        310
+      ],
+      "flags": {},
+      "order": 42,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            14651
+          ]
+        }
+      ],
+      "title": "PROMPT",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.19.3",
+        "Node name for S&R": "PrimitiveStringMultiline"
+      },
+      "widgets_values": [
+        "A photorealistic cinematic shot: A luxury modern penthouse overlooking the London skyline. The stylish businesswoman first slowly rises her arm to hear ear and then holds it there. A confident professional woman wearing an elegant dark tailored suit and teal blouse is lifting a modern black smartphone from waist level up to her right ear. At the end of the shot, the woman looks directly forward at the camera, she looks calm with professional confidence. The beautiful woman in the center is maintaining a subtle natural expression with depth of field behind her. The woman has long wavy ash-blonde hair. The room has warm golden hour interior lighting contrasting the blue evening sky.\n\nThe background remains beautifully out of focus. Hyper-realistic cinematic scene. Room stays completely Still. Only slight camera movement brings the scene to life."
+      ],
+      "color": "#d4d4d4",
+      "bgcolor": "#c0c0c0"
+    },
+    {
+      "id": 6197,
+      "type": "GrowMaskWithBlur",
+      "pos": [
+        2580,
+        580
+      ],
+      "size": [
+        400,
+        260
+      ],
+      "flags": {},
+      "order": 65,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 14629
+        }
+      ],
+      "outputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "links": [
+            14761
+          ]
+        },
+        {
+          "name": "mask_inverted",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-kjnodes",
+        "ver": "9c3255f39cd2ea0ebf94a2016af4bd2e5d6eb91b",
+        "Node name for S&R": "GrowMaskWithBlur"
+      },
+      "widgets_values": [
+        0,
+        0,
+        false,
+        false,
+        0,
+        1,
+        1,
+        false
+      ],
+      "color": "#d4d4d4",
+      "bgcolor": "#c0c0c0"
+    },
+    {
+      "id": 6244,
+      "type": "ComfySwitchNode",
+      "pos": [
+        2580,
+        420
+      ],
+      "size": [
+        400,
+        80
+      ],
+      "flags": {},
+      "order": 71,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "on_false",
+          "type": "MASK",
+          "link": 14762
+        },
+        {
+          "name": "on_true",
+          "type": "MASK",
+          "link": 14761
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "MASK",
+          "links": [
+            14769,
+            14772
+          ]
+        }
+      ],
+      "title": "USE MASK VIDEO?",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.22.3",
+        "Node name for S&R": "ComfySwitchNode"
+      },
+      "widgets_values": [
+        true
+      ],
+      "color": "#d4d4d4",
+      "bgcolor": "#c0c0c0"
+    },
+    {
+      "id": 6214,
+      "type": "PrimitiveInt",
+      "pos": [
+        840,
+        880
+      ],
+      "size": [
+        300,
+        90
+      ],
+      "flags": {},
+      "order": 43,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            14699,
+            14700,
+            14701
+          ]
+        }
+      ],
+      "title": "FRAME LOAD CAP",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.22.0",
+        "Node name for S&R": "PrimitiveInt"
+      },
+      "widgets_values": [
+        149,
+        "fixed"
+      ],
+      "color": "#d4d4d4",
+      "bgcolor": "#c0c0c0"
+    },
+    {
+      "id": 5893,
+      "type": "VHS_LoadVideo",
+      "pos": [
+        1230,
+        920
+      ],
+      "size": [
+        400,
+        538
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 50,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "meta_batch",
+          "shape": 7,
+          "type": "VHS_BatchManager",
+          "link": null
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": null
+        },
+        {
+          "name": "custom_width",
+          "type": "INT",
+          "widget": {
+            "name": "custom_width"
+          },
+          "link": 14163
+        },
+        {
+          "name": "custom_height",
+          "type": "INT",
+          "widget": {
+            "name": "custom_height"
+          },
+          "link": 14164
+        },
+        {
+          "name": "frame_load_cap",
+          "type": "INT",
+          "widget": {
+            "name": "frame_load_cap"
+          },
+          "link": 14699
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            14119,
+            14784
+          ]
+        },
+        {
+          "name": "frame_count",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": null
+        },
+        {
+          "name": "video_info",
+          "type": "VHS_VIDEOINFO",
+          "links": [
+            13804
+          ]
+        }
+      ],
+      "title": "DEPTH",
+      "properties": {
+        "cnr_id": "comfyui-videohelpersuite",
+        "ver": "449839959f0153fb8a57211a9364c55163935ca9",
+        "Node name for S&R": "VHS_LoadVideo"
+      },
+      "widgets_values": {
+        "video": "BusinessWoman_Depth_Shortened2.mp4",
+        "force_rate": 24,
+        "custom_width": 1920,
+        "custom_height": 1080,
+        "frame_load_cap": 0,
+        "skip_first_frames": 0,
+        "select_every_nth": 1,
+        "format": "AnimateDiff",
+        "videopreview": {
+          "hidden": false,
+          "paused": false,
+          "params": {
+            "filename": "BusinessWoman_Depth_Shortened2.mp4",
+            "type": "input",
+            "format": "video/mp4",
+            "force_rate": 24,
+            "custom_width": 1920,
+            "custom_height": 1080,
+            "frame_load_cap": 0,
+            "skip_first_frames": 0,
+            "select_every_nth": 1
+          }
+        }
+      },
+      "color": "#d4d4d4",
+      "bgcolor": "#c0c0c0"
+    },
+    {
+      "id": 6099,
+      "type": "ImageResizeKJv2",
+      "pos": [
+        3050,
+        510
+      ],
+      "size": [
+        270,
+        336
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 55,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 14784
+        },
+        {
+          "name": "mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": null
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "widget": {
+            "name": "width"
+          },
+          "link": 14214
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          },
+          "link": 14215
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            14222
+          ]
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-kjnodes",
+        "ver": "38cccdee6a484a702e4ac1a8b9a3cee0c4ed83f4",
+        "Node name for S&R": "ImageResizeKJv2"
+      },
+      "widgets_values": [
+        512,
+        512,
+        "nearest-exact",
+        "stretch",
+        "0, 0, 0",
+        "center",
+        2,
+        "cpu"
+      ]
+    },
+    {
+      "id": 6100,
+      "type": "BatchColorCorrector",
+      "pos": [
+        3040.4867715165074,
+        472.378261758438
+      ],
+      "size": [
+        297.16326904296875,
+        594
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 63,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 14222
+        },
+        {
+          "name": "reference_image",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [
+            14609
+          ]
+        },
+        {
+          "name": "palette_data",
+          "type": "STRING",
+          "links": null
+        },
+        {
+          "name": "histogram",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "name": "palette_image",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "name": "frame_count",
+          "type": "INT",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-mickmumpitz-nodes",
+        "ver": "5bc01c8b0a173bb1f3c7c5b3553a574ffb500e8c",
+        "Node name for S&R": "BatchColorCorrector"
+      },
+      "widgets_values": [
+        "Manual",
+        16,
+        true,
+        true,
+        "Natural",
+        0.4,
+        0.8,
+        true,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        -0.4,
+        -0.4,
+        0,
+        0,
+        false,
+        0.5
+      ]
+    },
+    {
+      "id": 6219,
+      "type": "VHS_VideoCombine",
+      "pos": [
+        3050,
+        700
+      ],
+      "size": [
+        640,
+        686.1818181818182
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 74,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 14758
+        },
+        {
+          "name": "audio",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": null
+        },
+        {
+          "name": "meta_batch",
+          "shape": 7,
+          "type": "VHS_BatchManager",
+          "link": null
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "Filenames",
+          "type": "VHS_FILENAMES",
+          "links": []
+        }
+      ],
+      "title": "FINAL VIDEO (INPAINTING)",
+      "properties": {
+        "cnr_id": "comfyui-videohelpersuite",
+        "ver": "2984ec4c4b93292421888f38db74a5e8802a8ff8",
+        "Node name for S&R": "VHS_VideoCombine"
+      },
+      "widgets_values": {
+        "frame_rate": 24,
+        "loop_count": 0,
+        "filename_prefix": "LTX2-3_LIP-SYNC",
+        "format": "video/h264-mp4",
+        "pix_fmt": "yuv420p",
+        "crf": 19,
+        "save_metadata": true,
+        "trim_to_audio": false,
+        "pingpong": false,
+        "save_output": false,
+        "videopreview": {
+          "hidden": false,
+          "paused": false,
+          "params": {
+            "filename": "LTX2-3_LIP-SYNC_00007.mp4",
+            "subfolder": "",
+            "type": "temp",
+            "format": "video/h264-mp4",
+            "frame_rate": 24,
+            "workflow": "LTX2-3_LIP-SYNC_00007.png",
+            "fullpath": "D:\\comfy\\ComfyUI_windows_portable\\ComfyUI\\temp\\LTX2-3_LIP-SYNC_00007.mp4"
+          }
+        }
+      }
+    },
+    {
+      "id": 6096,
+      "type": "ImageBlend",
+      "pos": [
+        3350,
+        430
+      ],
+      "size": [
+        330,
+        110
+      ],
+      "flags": {},
+      "order": 70,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image1",
+          "type": "IMAGE",
+          "link": 14610
+        },
+        {
+          "name": "image2",
+          "type": "IMAGE",
+          "link": 14609
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            14758,
+            14785
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.18.2",
+        "Node name for S&R": "ImageBlend"
+      },
+      "widgets_values": [
+        0.86,
+        "screen"
+      ]
     }
   ],
   "links": [
@@ -4290,14 +4291,6 @@
       6099,
       3,
       "INT"
-    ],
-    [
-      14216,
-      5893,
-      0,
-      6099,
-      0,
-      "IMAGE"
     ],
     [
       14222,
@@ -4620,14 +4613,6 @@
       "MASK"
     ],
     [
-      14773,
-      6251,
-      0,
-      6202,
-      8,
-      "MASK"
-    ],
-    [
       14775,
       6225,
       0,
@@ -4681,6 +4666,22 @@
       0,
       6202,
       20,
+      "IMAGE"
+    ],
+    [
+      14784,
+      5893,
+      0,
+      6099,
+      0,
+      "IMAGE"
+    ],
+    [
+      14785,
+      6096,
+      0,
+      6202,
+      8,
       "IMAGE"
     ]
   ],
@@ -4789,8 +4790,8 @@
         "version": 1,
         "state": {
           "lastGroupId": 210,
-          "lastNodeId": 6278,
-          "lastLinkId": 14781,
+          "lastNodeId": 6279,
+          "lastLinkId": 14785,
           "lastRerouteId": 89
         },
         "revision": 0,
@@ -7479,7 +7480,7 @@
                 ]
               },
               {
-                "label": "108 count",
+                "label": "149 count",
                 "localized_name": "count",
                 "name": "count",
                 "type": "INT",
@@ -9543,10 +9544,10 @@
     "links_added_by_ue": [],
     "workflowRendererVersion": "LG",
     "ds": {
-      "scale": 0.23579476910000546,
+      "scale": 0.28531167061100887,
       "offset": [
-        2036.7281278805617,
-        1465.683752901636
+        684.5872059482048,
+        917.5684838025647
       ]
     }
   },

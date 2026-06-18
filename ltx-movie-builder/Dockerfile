@@ -2,7 +2,7 @@ FROM runpod/comfyui:1.4.0-cuda12.8
 
 # ── Pin ComfyUI version (unshallow + checkout specific tag) ──────────────────
 # Change COMFYUI_VERSION to update. Use a tag (e.g. v0.17.2) or commit hash.
-ARG COMFYUI_VERSION=v0.20.1
+ARG COMFYUI_VERSION=v0.25.0
 RUN cd /opt/comfyui-baked && \
     git fetch --depth 1 origin tag "$COMFYUI_VERSION" && \
     git checkout "$COMFYUI_VERSION" && \
