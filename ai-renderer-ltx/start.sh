@@ -224,26 +224,80 @@ if [ ! -d "$COMFYUI_DIR" ] || [ ! -d "$VENV_DIR" ]; then
         "$MODELS_BASE/text_encoders/qwen_3_4b_fp4_flux2.safetensors|https://huggingface.co/Comfy-Org/vae-text-encorder-for-flux-klein-4b/resolve/main/split_files/text_encoders/qwen_3_4b_fp4_flux2.safetensors"
     )
 
+    # ── Fast, resumable, logged downloads ─────────────────────────────────────
+    # Why this shape:
+    #   * aria2c (multi-connection + resumable) is much faster and more reliable than
+    #     a single wget stream against Hugging Face; installed best-effort if missing.
+    #   * Only a few files download at once. Firing all ~11 at once floods HF with
+    #     parallel connections that get throttled/dropped — that is what stalled an
+    #     earlier boot at ~87 GB with disk to spare — and leaves no progress in the log.
+    #   * Every file resumes (-c / --continue), so re-running this pod finishes a
+    #     partial file instead of skipping it. Each file logs start, done, and size.
+    #   * A heartbeat prints the growing models-dir size so the boot never looks frozen.
+
+    # Best-effort: pull in aria2 if it isn't already on the image (one-time, first boot)
+    if ! command -v aria2c >/dev/null 2>&1; then
+        apt-get update -qq >/dev/null 2>&1 && \
+            apt-get install -y -qq --no-install-recommends aria2 >/dev/null 2>&1 || true
+    fi
+
+    MIN_BYTES=1048576          # smaller than this => treat as a failed/partial stub
+    FAIL_LOG="$(mktemp)"
+
+    download_model() {
+        local filepath="$1" url="$2"
+        local name dir rc size
+        name="$(basename "$filepath")"
+        dir="$(dirname "$filepath")"
+        if command -v aria2c >/dev/null 2>&1; then
+            if aria2c -c -x8 -s8 -k1M --max-tries=5 --retry-wait=10 \
+                      --console-log-level=error --summary-interval=0 \
+                      -d "$dir" -o "$name" "$url" >/dev/null 2>&1; then rc=0; else rc=$?; fi
+        else
+            if wget -q --continue --tries=5 --timeout=60 --waitretry=10 \
+                    -O "$filepath" "$url"; then rc=0; else rc=$?; fi
+        fi
+        size=$(stat -c%s "$filepath" 2>/dev/null || echo 0)
+        if [ "$rc" -eq 0 ] && [ "$size" -ge "$MIN_BYTES" ]; then
+            echo "  done: $name ($(numfmt --to=iec "$size" 2>/dev/null || echo "${size}B"))"
+        else
+            echo "  FAILED: $name (rc=$rc, ${size}B)"
+            echo "$name" >> "$FAIL_LOG"
+        fi
+    }
+
+    # Heartbeat: print total downloaded size every 30s so the quiet phase shows progress
+    ( while true; do
+          sleep 30
+          echo "  ...downloading — models dir now $(du -sh "$MODELS_BASE" 2>/dev/null | cut -f1)"
+      done ) &
+    HEARTBEAT_PID=$!
+
+    MAX_PARALLEL=3
     DL_PIDS=()
     for model in "${MODELS[@]}"; do
         IFS='|' read -r filepath url <<< "$model"
-        if [ ! -f "$filepath" ]; then
-            echo "Downloading $(basename "$filepath")..."
-            wget -q -O "$filepath" "$url" &
-            DL_PIDS+=($!)
-        fi
+        # Throttle: keep at most MAX_PARALLEL downloads running (+1 for the heartbeat)
+        while [ "$(jobs -rp | wc -l)" -ge "$((MAX_PARALLEL + 1))" ]; do
+            wait -n 2>/dev/null || true
+        done
+        echo "Downloading $(basename "$filepath")..."
+        download_model "$filepath" "$url" &
+        DL_PIDS+=($!)
     done
-    DL_FAILED=0
-    for pid in "${DL_PIDS[@]}"; do
-        if ! wait "$pid"; then
-            DL_FAILED=1
-        fi
-    done
-    if [ "$DL_FAILED" -ne 0 ]; then
-        echo "WARNING: Some model downloads failed. Check logs above."
+
+    # Wait only for the download jobs, then stop the heartbeat
+    for pid in "${DL_PIDS[@]}"; do wait "$pid" 2>/dev/null || true; done
+    kill "$HEARTBEAT_PID" 2>/dev/null || true
+
+    if [ -s "$FAIL_LOG" ]; then
+        echo "WARNING: the following model download(s) failed or are incomplete:"
+        sed 's/^/    - /' "$FAIL_LOG"
+        echo "Restart the container to resume them — downloads continue where they left off."
     else
-        echo "All model downloads completed."
+        echo "All model downloads completed ($(du -sh "$MODELS_BASE" 2>/dev/null | cut -f1) total)."
     fi
+    rm -f "$FAIL_LOG"
 
     # Create venv with system site-packages (torch, numpy, etc. pre-installed in image)
     if [ ! -d "$VENV_DIR" ]; then
