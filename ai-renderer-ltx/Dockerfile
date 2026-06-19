@@ -2,7 +2,7 @@ FROM runpod/comfyui:1.4.0-cuda12.8
 
 # ── Pin ComfyUI version (unshallow + checkout specific tag) ──────────────────
 # Change COMFYUI_VERSION to update. Use a tag (e.g. v0.17.2) or commit hash.
-ARG COMFYUI_VERSION=v0.20.1
+ARG COMFYUI_VERSION=v0.25.1
 RUN cd /opt/comfyui-baked && \
     git fetch --depth 1 origin tag "$COMFYUI_VERSION" && \
     git checkout "$COMFYUI_VERSION" && \
@@ -20,7 +20,8 @@ RUN git clone https://github.com/Lightricks/ComfyUI-LTXVideo && \
     git clone https://github.com/cubiq/ComfyUI_essentials && \
     git clone https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch && \
     git clone https://github.com/yolain/ComfyUI-Easy-Use && \
-    git clone https://github.com/rgthree/rgthree-comfy
+    git clone https://github.com/rgthree/rgthree-comfy && \
+    git clone https://github.com/ClownsharkBatwing/RES4LYF
 # ── Install all custom-node deps into system site-packages ────────────────────
 RUN pip install --no-cache-dir \
     GitPython numpy pillow opencv-python && \
