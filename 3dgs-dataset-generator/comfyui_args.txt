@@ -1,0 +1,3 @@
+# Add your custom ComfyUI arguments here (one per line)
+# --use-sage-attention is auto-added when sageattention is available
+--enable-cors-header
